@@ -2846,7 +2846,8 @@
   opacity: 0;
 }
 
-.norio-office-rich-text-bubble {
+.norio-office-rich-text-bubble,
+.norio-office-rich-table-bubble-menu {
   z-index: 60;
   max-width: calc(100vw - 16px);
   padding: 5px;
@@ -2957,7 +2958,8 @@
 }
 
 @media print {
-  .norio-office-rich-text-bubble {
+  .norio-office-rich-text-bubble,
+  .norio-office-rich-table-bubble-menu {
     display: none !important;
   }
 }
@@ -2974,18 +2976,14 @@
     0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
-.norio-office-rich-table-bubble-menu__toolbar {
-  display: none;
-}
-
-.norio-office-rich-table-bubble-menu > button.norio-office-rich-table-bubble-menu__button {
-  display: none;
-}
-
 .norio-office-rich-table-bubble-menu__actions {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 4px;
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid #e6ebf2;
 }
 
 .norio-office-rich-table-bubble-menu__dropdown {

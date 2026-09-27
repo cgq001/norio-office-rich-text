@@ -1,4 +1,4 @@
-import { Extension } from '@tiptap/core'
+import { Extension, type CommandProps } from '@tiptap/core'
 
 type IndentOptions = {
   types: string[]
@@ -65,29 +65,33 @@ export const Indent = Extension.create<IndentOptions>({
   },
 
   addCommands() {
-    const updateIndent = (delta: number) => ({ state, dispatch }: { state: any; dispatch?: ((tr: any) => void) | undefined }) => {
-      const { from, to } = state.selection
+    const updateIndent = (delta: number) => ({ state, dispatch }: CommandProps) => {
       const tr = state.tr
       let changed = false
+      const visited = new Set<number>()
 
-      state.doc.nodesBetween(from, to, (node: any, pos: number) => {
-        if (!this.options.types.includes(node.type.name)) {
-          return
-        }
+      // Cell selections have a separate range for each selected cell.
+      for (const { $from, $to } of state.selection.ranges) {
+        state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
+          if (!this.options.types.includes(node.type.name) || visited.has(pos)) {
+            return
+          }
+          visited.add(pos)
 
-        const currentIndent = Number(node.attrs.indent ?? 0)
-        const nextIndent = clampIndent(currentIndent + delta, this.options.minLevel, this.options.maxLevel)
+          const currentIndent = Number(node.attrs.indent ?? 0)
+          const nextIndent = clampIndent(currentIndent + delta, this.options.minLevel, this.options.maxLevel)
 
-        if (nextIndent === currentIndent) {
-          return
-        }
+          if (nextIndent === currentIndent) {
+            return
+          }
 
-        tr.setNodeMarkup(pos, undefined, {
-          ...node.attrs,
-          indent: nextIndent,
+          tr.setNodeMarkup(pos, undefined, {
+            ...node.attrs,
+            indent: nextIndent,
+          })
+          changed = true
         })
-        changed = true
-      })
+      }
 
       if (!changed) {
         return false

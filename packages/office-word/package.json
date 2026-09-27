@@ -1,6 +1,6 @@
 {
   "name": "@norio-office/rich-text",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A reusable Vue 3 rich text editor component built with Tiptap 3.",
   "type": "module",
   "main": "./dist/index.umd.cjs",

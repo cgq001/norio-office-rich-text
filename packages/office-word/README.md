@@ -280,6 +280,8 @@ const featureCodes: RichTextEditorCode[] = [
 
 先分清两个菜单：选中文字后浮在附近的是“文字气泡”，用来改选中文字的格式；鼠标移到段落、图片、表格等块旁边后出现的按钮是“句柄”，打开的是整块操作菜单。句柄菜单始终操作它对应的块，不一定是光标所在的块。
 
+句柄只在空闲时悬停显示，不会随光标自动出现。输入（包括中文输入法）、拖动选中文字或块框选时，句柄及其菜单会隐藏；有文字、图片、视频、链接或表格气泡菜单时，也不显示句柄。例如，选中文字后只能看到格式气泡，收起选区后再次移动鼠标到块旁边，才会显示句柄。
+
 块侧边菜单与 `Ctrl/Cmd+C`、`Ctrl/Cmd+X`、`Ctrl/Cmd+V` 可以交叉使用，保留表格、高亮块、任务列表、图片等节点类型和属性。菜单粘贴在当前块下方插入，优先读取最新系统剪贴板；普通快捷键粘贴保留文字选区和代码块的原生行为，无需额外对接。
 
 菜单读取剪贴板需要安全上下文（HTTPS 或 localhost）和浏览器权限。读取被拒绝时回退到本编辑器缓存，外部内容可用快捷键粘贴；菜单剪切只有在成功写入系统剪贴板后才删除原节点。
@@ -310,11 +312,13 @@ const featureCodes: RichTextEditorCode[] = [
 
 在编辑状态选中文字，会在选区附近显示格式气泡菜单，提供正文/标题、字体、字号、文字色、文字背景色、加粗、斜体、下划线、删除线、上下标、对齐与缩进、行内代码和清除格式。上下标互斥切换；颜色使用内置颜色选择器，最近使用颜色与顶部工具栏共享，选色后不关闭面板。
 
+气泡在选择结束后才出现：按住鼠标拖选时隐藏，松开鼠标后显示；按住 Shift 用方向键扩展选区时隐藏，松开 Shift 后显示。例如，拖选两段文字的过程中不会有菜单挡住正文，松开后才显示格式按钮。重新拖选时，已有气泡也会暂时隐藏。
+
 顶部工具栏和选区气泡菜单的字号选项统一只保留初号、小初、一号、小一、二号、小二、三号、小三、四号、小四、五号、小五，不显示纯数字字号选项；已有文档的字号数据保持不变。
 
 选区气泡的正文按钮显示当前块类型图标；菜单提供正文、一至三级标题、“其他标题”（二级菜单含四至六级）、有序列表、无序列表、任务、代码块、引用和高亮块。代码块与引用之间使用分隔线，代码块、引用、高亮块分别遵循现有 `code-block`、`blockquote`、`highlight-block` 授权码。选择后直接转换或包裹原有内容，不额外插入空块；不提供尚未实现的同步块入口。
 
-操作保留选区：行内格式只修改选中文字，对齐、缩进和标题修改所在块。表格内选中文字显示文字气泡，选中单元格或整表显示表格气泡。收起选区、点击外部或按 Escape 可关闭；小屏自动换行，预览/只读、演示和块句柄菜单打开时不显示。无需新增对接参数，格式仍随现有文档 JSON/HTML 保存。
+操作保留选区：行内格式只修改选中文字，对齐、缩进和标题修改所在块。表格内选中文字、单元格或整表时，统一显示一个表格气泡：上方提供字体、字号、文字色、文字背景色、加粗、斜体、下划线、删除线、对齐与缩进，不提供正文/标题、上下标、行内代码和清除格式；下方提供合并、拆分、单元格背景色、主题色及增删行列等表格操作，不能执行的操作会禁用。例如，只选中单元格中的“评论”二字，改字体、字号或文字颜色不会影响同格其他文字；“文字背景颜色”与整格的“设置单元格背景色”互相独立。拖选期间不显示，选择结束后才出现。收起选区、点击外部或按 Escape 可关闭；小屏自动换行，预览/只读和演示时不显示。文字选区优先显示气泡，并关闭已打开的句柄菜单。无需新增对接参数，格式仍随现有文档 JSON/HTML 保存。
 
 ### 表格主题色
 
@@ -1297,6 +1301,8 @@ Menu clipboard reads require a secure context (HTTPS or localhost) and browser p
 
 ### Block Alignment And Colors
 
+Block handles appear only on idle hover, not automatically at the caret. Typing (including IME composition), dragging a text selection, and block marquee selection hide the handles and their menus. Text, image, video, link, and table bubbles take priority over handles. For example, selecting text shows only its formatting bubble; collapse the selection and hover over a block again to reveal its handle.
+
 Paragraph, heading, ordered-list, and bullet-list handle menus provide left/center/right alignment with an active check, followed by separated increase/decrease indent actions. A list handle updates its paragraph/heading content, including nested items, while preserving list structure, numbering, marks, and unrelated blocks. Mixed alignments show no check; indentation is limited to 0-8 per text block, with actions disabled only when no target can change.
 
 The type buttons highlight the handle target's current paragraph, H1-H6, ordered/bullet/task-list type, independently of the caret. Active buttons expose `aria-pressed` and use the same blue styling for their text and icons. Reopening after a conversion reflects the new type; insertion controls have no current-type highlight.
@@ -1315,9 +1321,11 @@ Second/third-level color menus remain open after changes, including highlight-bl
 
 Selecting text in edit mode shows paragraph/headings, font family/size, text/background colors, bold/italic/underline/strike, superscript/subscript, alignment/indentation, inline code, and clear-format controls. Actions reuse the toolbar commands and preserve the selection. Superscript/subscript are mutually exclusive; color palettes share recent colors with the toolbar and remain open after changes.
 
+The bubble appears after selection finishes, not during a mouse drag. It stays hidden until the pointer is released, or until Shift is released after expanding a selection with navigation keys. Starting another selection temporarily hides an existing bubble. For example, dragging across two paragraphs leaves the text unobstructed; releasing the mouse reveals the formatting controls.
+
 The block-type button shows the current type's icon. Its dropdown offers paragraph, headings 1-3, a nested headings 4-6 menu, ordered/bullet/task lists, code blocks, then a separator followed by quotes and highlight blocks. Code, quote, and highlight options respect the existing `code-block`, `blockquote`, and `highlight-block` feature codes. Choices transform or wrap the existing content rather than insert empty blocks. Font-size menus offer only the 12 Chinese named sizes, without numeric-only options.
 
-Inline formatting affects only the selected text, while heading/alignment/indentation changes affect its blocks. Text selection inside cells uses the text bubble; whole-cell/table selections use table actions. Outside clicks, collapsed selections, and Escape dismiss the menu. It wraps on narrow screens and is hidden in preview/read-only, presentation, or while handle menus are open. No new integration API or document attributes are required.
+Inline formatting affects only the selected text, while heading/alignment/indentation changes affect its blocks. Text, cell, and whole-table selections share one table bubble: font, size, text/background colors, bold, italic, underline, strike, and alignment/indentation above, and merge/split, cell background, theme, and row/column actions below. The table bubble omits block type, superscript/subscript, inline code, and clear formatting. Unavailable operations are disabled. For example, changing the font or color of a selected word does not change the rest of its cell; text background and whole-cell background are separate. The bubble stays hidden during selection gestures and appears when they finish. Outside clicks, collapsed selections, and Escape dismiss the menu. It wraps on narrow screens and is hidden in preview/read-only or presentation. A text selection takes priority and closes any open handle menu. No new integration API or document attributes are required.
 
 ### Table Themes
 

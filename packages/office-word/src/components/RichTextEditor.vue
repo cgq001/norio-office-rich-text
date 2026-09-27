@@ -167,10 +167,6 @@ const tableThemeMenuRef = ref<HTMLElement | null>(null)
 const blockSideTableThemeTriggerRef = ref<HTMLElement | null>(null)
 const blockSideDividerStyleTriggerRef = ref<HTMLElement | null>(null)
 const blockSideDividerColorTriggerRef = ref<HTMLElement | null>(null)
-const tableHeadingMenuRef = ref<HTMLElement | null>(null)
-const tableListMenuRef = ref<HTMLElement | null>(null)
-const tableColorMenuRef = ref<HTMLElement | null>(null)
-const tableHighlightMenuRef = ref<HTMLElement | null>(null)
 const headingMenuRef = ref<HTMLElement | null>(null)
 const fontFamilyMenuRef = ref<HTMLElement | null>(null)
 const scriptMenuRef = ref<HTMLElement | null>(null)
@@ -195,10 +191,6 @@ const isTableActionColorMenuOpen = ref(false)
 const isTableThemeMenuOpen = ref(false)
 const tableThemeMenuHeight = ref(360)
 const tableThemeMenuViewportVersion = ref(0)
-const isTableHeadingMenuOpen = ref(false)
-const isTableListMenuOpen = ref(false)
-const isTableColorMenuOpen = ref(false)
-const isTableHighlightMenuOpen = ref(false)
 const isHeadingMenuOpen = ref(false)
 const isFontFamilyMenuOpen = ref(false)
 const isScriptMenuOpen = ref(false)
@@ -721,6 +713,13 @@ const selectedMarqueeBlockPositions = ref<number[]>([])
 const dragInsertIndicator = ref<DragInsertIndicator | null>(null)
 const hoveredBlockSideControl = ref<BlockSideControl | null>(null)
 const activeBlockSideControl = ref<BlockSideControl | null>(null)
+const isBlockSideInteractionActive = ref(false)
+const isEditorTyping = ref(false)
+const isEditorComposing = ref(false)
+const hasNativeEditorSelection = ref(false)
+const isTextSelectionBubbleVisible = ref(false)
+const isTableSelectionBubbleVisible = ref(false)
+let editorTypingTimer: ReturnType<typeof setTimeout> | null = null
 const blockSideMenuMode = ref<BlockSideMenuMode | null>(null)
 const blockSideMenuAnchorPoint = ref<{ left: number; top: number } | null>(null)
 const blockSideSubmenuMode = ref<BlockSideSubmenuMode | null>(null)
@@ -1932,9 +1931,29 @@ const watermarkStyle = computed(() => {
 })
 const watermarkTiles = Array.from({ length: 96 }, (_, index) => index)
 
+const shouldHideBlockSideControls = computed(() => {
+  selectionStateVersion.value
+  const selection = editor.value?.state.selection
+  const hasRangeSelection = selection && !(selection instanceof NodeSelection) && !selection.empty
+  const hasNodeBubble = selection instanceof NodeSelection
+    && ['imageBlock', 'videoBlock', 'linkBlock', 'table'].includes(selection.node.type.name)
+  return !editorEditable.value || isBlockSideInteractionActive.value || isEditorTyping.value || isEditorComposing.value
+    || hasNativeEditorSelection.value || isTextSelectionBubbleVisible.value || isTableSelectionBubbleVisible.value
+    || !!marqueeGestureStart.value || hasMarqueeSelection.value || !!hasRangeSelection || hasNodeBubble
+})
 const visibleBlockSideControl = computed(() =>
-  editorEditable.value ? activeBlockSideControl.value ?? hoveredBlockSideControl.value : null,
+  shouldHideBlockSideControls.value ? null : activeBlockSideControl.value ?? hoveredBlockSideControl.value,
 )
+watch(shouldHideBlockSideControls, (hidden) => {
+  if (!hidden) return
+  closeBlockSideMenu()
+  hoveredBlockSideControl.value = null
+}, { flush: 'sync' })
+watch(isTableSelectionBubbleVisible, (visible) => {
+  if (visible) return
+  isTableActionColorMenuOpen.value = false
+  isTableThemeMenuOpen.value = false
+})
 const visibleBlockTransformActions = computed(() => {
   const control = visibleBlockSideControl.value
   return control && canShowBlockTransforms(control) ? blockTransformActions : []
@@ -2374,6 +2393,7 @@ const currentQuoteBackgroundColor = computed(() => {
 })
 
 const currentTableSelection = computed(() => {
+  selectionStateVersion.value
   if (!editor.value?.isActive('table')) {
     return {
       isCellSelection: false,
@@ -2395,6 +2415,7 @@ const currentTableSelection = computed(() => {
 })
 
 const currentTableCellBackgroundColor = computed<string | null>(() => {
+  selectionStateVersion.value
   if (!editor.value?.isActive('table')) {
     return null
   }
@@ -2534,6 +2555,7 @@ function canRunEditorCommand(run: (instance: NonNullable<typeof editor.value>) =
 }
 
 function canRunTableCommand(run: () => boolean) {
+  selectionStateVersion.value
   try {
     return run()
   } catch {
@@ -2672,9 +2694,16 @@ const textSelectionActions = computed<TextSelectionAction[]>(() => {
     { key: 'clear', label: '清除格式', icon: 'rubber', disabled: !canClearFormatting.value, run: clearFormatting },
   ]
 })
+const tableSelectionActions = computed(() =>
+  textSelectionActions.value.filter(action => !['heading', 'script', 'code', 'clear'].includes(action.key)),
+)
 const canApplyTableCellBackground = computed(() => !!editor.value?.isActive('table'))
-const canInsertRowAround = computed(() => currentTableSelection.value.isRowSelection)
-const canInsertColumnAround = computed(() => currentTableSelection.value.isColumnSelection)
+const hasSelectedTableText = computed(() => {
+  selectionStateVersion.value
+  return editor.value?.state.selection instanceof TextSelection && !editor.value.state.selection.empty && editor.value.isActive('table')
+})
+const canInsertRowAround = computed(() => currentTableSelection.value.isRowSelection || hasSelectedTableText.value)
+const canInsertColumnAround = computed(() => currentTableSelection.value.isColumnSelection || hasSelectedTableText.value)
 const canDeleteTableSelection = computed(() =>
   !!editor.value?.isActive('table')
     && (currentTableSelection.value.isRowSelection || currentTableSelection.value.isColumnSelection || currentTableSelection.value.isCellSelection),
@@ -4008,21 +4037,44 @@ function getBlockSideControlAt(clientX: number, clientY: number) {
     ) ?? null
 }
 
-function getBlockSideControlAtPos(pos: number) {
-  return getTopLevelSelectableBlocks()
-    .map(toBlockSideControl)
-    .find((block) => pos >= block.from && pos <= block.to) ?? null
+function suspendBlockSideControls() {
+  isBlockSideInteractionActive.value = true
+  closeBlockSideMenu()
+  hoveredBlockSideControl.value = null
 }
 
-function syncBlockSideControlFromSelection() {
-  if (!editor.value || !editorEditable.value || isPresentationMode.value || blockSideMenuMode.value || blockSideSubmenuMode.value || blockDragState.value) {
-    return
-  }
+function syncNativeEditorSelection() {
+  const selection = window.getSelection()
+  const content = editor.value?.view.dom
+  hasNativeEditorSelection.value = !!content && !!selection && !selection.isCollapsed
+    && !!selection.anchorNode && content.contains(selection.anchorNode)
+    && !!selection.focusNode && content.contains(selection.focusNode)
+}
 
-  const control = getBlockSideControlAtPos(editor.value.state.selection.from)
-  if (control) {
-    hoveredBlockSideControl.value = control
-  }
+function handlePageEditorInput(event: Event) {
+  if (!editorEditable.value || !(event.target instanceof Node) || !editor.value?.view.dom.contains(event.target)) return
+  if (event instanceof KeyboardEvent && !event.isComposing
+    && !(['Enter', 'Backspace', 'Delete', 'Tab'].includes(event.key)
+      || (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey))) return
+  suspendBlockSideControls()
+  isEditorTyping.value = true
+  if (editorTypingTimer !== null) clearTimeout(editorTypingTimer)
+  editorTypingTimer = setTimeout(() => {
+    isEditorTyping.value = false
+    editorTypingTimer = null
+  }, 300)
+}
+
+function handlePageEditorCompositionStart(event: CompositionEvent) {
+  if (!(event.target instanceof Node) || !editor.value?.view.dom.contains(event.target)) return
+  isEditorComposing.value = true
+  handlePageEditorInput(event)
+}
+
+function handlePageEditorCompositionEnd(event: CompositionEvent) {
+  if (!(event.target instanceof Node) || !editor.value?.view.dom.contains(event.target)) return
+  isEditorComposing.value = false
+  handlePageEditorInput(event)
 }
 
 function handlePageBlockMouseMove(event: MouseEvent) {
@@ -4036,6 +4088,17 @@ function handlePageBlockMouseMove(event: MouseEvent) {
     return
   }
 
+  if (event.buttons || isEditorTyping.value || isEditorComposing.value || marqueeGestureStart.value || hasMarqueeSelection.value) {
+    hoveredBlockSideControl.value = null
+    return
+  }
+
+  isBlockSideInteractionActive.value = false
+  syncNativeEditorSelection()
+  if (shouldHideBlockSideControls.value) {
+    hoveredBlockSideControl.value = null
+    return
+  }
   hoveredBlockSideControl.value = getBlockSideControlAt(event.clientX, event.clientY)
 }
 
@@ -4056,6 +4119,7 @@ function keepBlockSideControl(control: BlockSideControl) {
 }
 
 function openBlockSideMenu(control: BlockSideControl, mode: BlockSideMenuMode) {
+  if (shouldHideBlockSideControls.value) return
   const keepAnchor = mode === 'actions' && blockSideMenuMode.value === mode
     && activeBlockSideControl.value?.pos === control.pos && blockSideMenuAnchorPoint.value
   keepBlockSideControl(control)
@@ -4865,6 +4929,8 @@ function handlePageMouseDown(event: MouseEvent) {
     return
   }
 
+  if (event.target instanceof Node && editor.value?.view.dom.contains(event.target)) suspendBlockSideControls()
+
   if (isInteractiveMarqueeStartTarget(event.target)) {
     return
   }
@@ -5225,7 +5291,13 @@ function syncActiveTableState() {
     return
   }
 
-  const table = findClosestElement(window.getSelection()?.anchorNode ?? null, 'table') as HTMLTableElement | null
+  const selection = editor.value.state.selection
+  let tablePos: number | null = selection instanceof NodeSelection && selection.node.type.name === 'table' ? selection.from : null
+  for (let depth = selection.$from.depth; tablePos === null && depth > 0; depth -= 1) {
+    if (selection.$from.node(depth).type.name === 'table') tablePos = selection.$from.before(depth)
+  }
+  const tableDom = tablePos === null ? null : editor.value.view.nodeDOM(tablePos)
+  const table = tableDom instanceof HTMLTableElement ? tableDom : tableDom instanceof Element ? tableDom.querySelector('table') : null
   const wrapper = table?.closest('.tableWrapper') as HTMLElement | null
   if (!table || !wrapper) {
     clearActiveTableState()
@@ -5397,19 +5469,6 @@ function queueTableStateSync() {
   })
 }
 
-function shouldShowTableBubbleMenu() {
-  if (!editorEditable.value || !editor.value?.isEditable || !activeTableElement.value) {
-    return false
-  }
-
-  const selection = editor.value.state.selection
-  if (selection instanceof CellSelection) {
-    return true
-  }
-
-  return selection instanceof NodeSelection && editor.value.isActive('table')
-}
-
 
 function shouldShowCountdownBlockBubbleMenu() {
   return false
@@ -5436,22 +5495,6 @@ function getCountdownBlockBubbleVirtualElement() {
     getBoundingClientRect: () => activeCountdownBlockElement.value!.getBoundingClientRect(),
     contextElement: activeCountdownBlockElement.value,
   }
-}
-
-function toggleTableHeadingMenu() {
-  isTableHeadingMenuOpen.value = !isTableHeadingMenuOpen.value
-}
-
-function toggleTableListMenu() {
-  isTableListMenuOpen.value = !isTableListMenuOpen.value
-}
-
-function toggleTableColorMenu() {
-  isTableColorMenuOpen.value = !isTableColorMenuOpen.value
-}
-
-function toggleTableHighlightMenu() {
-  isTableHighlightMenuOpen.value = !isTableHighlightMenuOpen.value
 }
 
 function toggleTableActionColorMenu() {
@@ -5514,36 +5557,6 @@ function updateTableThemeAt(pos: number, theme: TableThemeColors | null) {
   })
   editor.value.view.dispatch(transaction)
   queueTableStateSync()
-}
-
-function applyTableHeading(level?: 1 | 2 | 3 | 4 | 5 | 6) {
-  if (level) {
-    setHeading(level)
-  } else {
-    setParagraph()
-  }
-  isTableHeadingMenuOpen.value = false
-}
-
-function applyTableList(action: 'bullet' | 'ordered' | 'task') {
-  if (action === 'bullet') {
-    editor.value?.chain().focus().toggleBulletList().run()
-  } else if (action === 'ordered') {
-    editor.value?.chain().focus().toggleOrderedList().run()
-  } else {
-    editor.value?.chain().focus().toggleTaskList().run()
-  }
-  isTableListMenuOpen.value = false
-}
-
-function applyTableTextColor(color: string) {
-  applyTextColor(color)
-  isTableColorMenuOpen.value = false
-}
-
-function applyTableHighlightColor(color: string) {
-  applyHighlightColor(color)
-  isTableHighlightMenuOpen.value = false
 }
 
 function applyTableCellBackgroundColor(color: string | null) {
@@ -8027,13 +8040,12 @@ function bindTableEditorListeners() {
   }
 
   const handleSelectionChange = ({ transaction }: { transaction?: Transaction } = {}) => {
-    if (transaction?.getMeta('textSelectionBubbleMenu') === 'updatePosition') return
+    if (transaction?.getMeta('textSelectionBubbleMenu') === 'updatePosition' || transaction?.getMeta('tableBubbleMenu') === 'updatePosition') return
     selectionStateVersion.value += 1
     if (!editor.value?.isActive('table')) isTableThemeMenuOpen.value = false
     queueTableStateSync()
     syncOutlineState()
     syncMentionState()
-    void nextTick(syncBlockSideControlFromSelection)
   }
 
   const handleBlockSideThemeTransaction = ({ transaction }: { transaction: Transaction }) => {
@@ -8097,6 +8109,7 @@ function bindTableEditorListeners() {
 
 onMounted(() => {
   syncViewportWidth()
+  document.addEventListener('selectionchange', syncNativeEditorSelection)
   document.addEventListener('fullscreenchange', syncFullscreenState)
   document.addEventListener('mousedown', handleDocumentPointerDown)
   document.addEventListener('mousemove', handleDocumentMouseMove)
@@ -8118,6 +8131,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  document.removeEventListener('selectionchange', syncNativeEditorSelection)
+  if (editorTypingTimer !== null) clearTimeout(editorTypingTimer)
   blockSideMenuResizeObserver?.disconnect()
   document.removeEventListener('fullscreenchange', syncFullscreenState)
   document.removeEventListener('mousedown', handleDocumentPointerDown)
@@ -8152,10 +8167,6 @@ watch(
       closeMentionPanel()
       isTableActionColorMenuOpen.value = false
       isTableThemeMenuOpen.value = false
-      isTableHeadingMenuOpen.value = false
-      isTableListMenuOpen.value = false
-      isTableColorMenuOpen.value = false
-      isTableHighlightMenuOpen.value = false
     }
   },
   { flush: 'sync' },
@@ -9215,6 +9226,10 @@ defineExpose<RichTextEditorInstance>({
               ref="pageRef"
               class="norio-office-rich-editor__page"
               @mousedown.capture="handlePageMouseDown"
+              @keydown.capture="handlePageEditorInput"
+              @beforeinput.capture="handlePageEditorInput"
+              @compositionstart.capture="handlePageEditorCompositionStart"
+              @compositionend.capture="handlePageEditorCompositionEnd"
               @mousemove="handlePageBlockMouseMove"
               @mouseleave="handlePageBlockMouseLeave"
               @dragenter.capture="handlePageImageDragEnter"
@@ -9223,178 +9238,19 @@ defineExpose<RichTextEditorInstance>({
               @drop.capture="handlePageImageDrop"
             >
               <TextSelectionMenu
+                @visibility-change="isTextSelectionBubbleVisible = $event"
                 v-if="editor"
                 :editor="editor" :actions="textSelectionActions"
                 :enabled="editorEditable && !isPresentationMode && !blockSideMenuMode && !hasMarqueeSelection"
               />
-              <BubbleMenu
+              <TextSelectionMenu
                 v-if="editor"
-                plugin-key="tableBubbleMenu"
-                v-show="editorEditable"
-                class="norio-office-rich-table-bubble-menu"
-                :editor="editor"
-                :should-show="shouldShowTableBubbleMenu"
+                scope="table"
+                :editor="editor" :actions="tableSelectionActions"
+                :enabled="editorEditable && !isPresentationMode && !blockSideMenuMode && !hasMarqueeSelection"
+                @visibility-change="isTableSelectionBubbleVisible = $event"
                 :get-referenced-virtual-element="getTableBubbleVirtualElement"
-                :options="{ placement: 'top-start' }"
               >
-                <div class="norio-office-rich-table-bubble-menu__toolbar">
-                  <div ref="tableHeadingMenuRef" class="norio-office-rich-table-bubble-menu__dropdown">
-                    <button
-                      type="button"
-                      class="norio-office-rich-table-bubble-menu__button norio-office-rich-table-bubble-menu__button--select"
-                      @mousedown.prevent
-                      @click="toggleTableHeadingMenu"
-                    >
-                      <span class="norio-office-rich-table-bubble-menu__text">T</span>
-                      <OfficeIcon name="xiangxiajiantou" :size="10" color="#9ca3af" background-color="transparent" />
-                    </button>
-
-                    <div v-if="isTableHeadingMenuOpen" class="norio-office-rich-table-bubble-menu__menu">
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableHeading()">正文</button>
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableHeading(1)">标题 1</button>
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableHeading(2)">标题 2</button>
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableHeading(3)">标题 3</button>
-                    </div>
-                  </div>
-
-                  <div ref="tableListMenuRef" class="norio-office-rich-table-bubble-menu__dropdown">
-                    <button
-                      type="button"
-                      class="norio-office-rich-table-bubble-menu__button norio-office-rich-table-bubble-menu__button--select"
-                      @mousedown.prevent
-                      @click="toggleTableListMenu"
-                    >
-                      <OfficeIcon name="wuxuliebiao" :size="14" color="#4b5563" background-color="transparent" />
-                      <OfficeIcon name="xiangxiajiantou" :size="10" color="#9ca3af" background-color="transparent" />
-                    </button>
-
-                    <div v-if="isTableListMenuOpen" class="norio-office-rich-table-bubble-menu__menu">
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableList('bullet')">无序列表</button>
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableList('ordered')">有序列表</button>
-                      <button type="button" class="norio-office-rich-table-bubble-menu__menu-item" @mousedown.prevent @click="applyTableList('task')">任务列表</button>
-                    </div>
-                  </div>
-
-                  <span class="norio-office-rich-table-bubble-menu__divider" />
-
-                  <button
-                    type="button"
-                    class="norio-office-rich-table-bubble-menu__button"
-                    :class="{ 'norio-office-rich-table-bubble-menu__button--active': editor?.isActive('bold') }"
-                    @mousedown.prevent
-                    @click="toggleBold"
-                  >
-                    <OfficeIcon name="jiacu" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-                  <button
-                    type="button"
-                    class="norio-office-rich-table-bubble-menu__button"
-                    :class="{ 'norio-office-rich-table-bubble-menu__button--active': editor?.isActive('strike') }"
-                    @mousedown.prevent
-                    @click="toggleStrike"
-                  >
-                    <span class="norio-office-rich-table-bubble-menu__text norio-office-rich-table-bubble-menu__text--strike">S</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="norio-office-rich-table-bubble-menu__button"
-                    :class="{ 'norio-office-rich-table-bubble-menu__button--active': editor?.isActive('italic') }"
-                    @mousedown.prevent
-                    @click="toggleItalic"
-                  >
-                    <OfficeIcon name="xieti" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-                  <button
-                    type="button"
-                    class="norio-office-rich-table-bubble-menu__button"
-                    :class="{ 'norio-office-rich-table-bubble-menu__button--active': editor?.isActive('underline') }"
-                    @mousedown.prevent
-                    @click="toggleUnderline"
-                  >
-                    <OfficeIcon name="xiahuaxian" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-                  <button
-                    type="button"
-                    class="norio-office-rich-table-bubble-menu__button"
-                    :class="{ 'norio-office-rich-table-bubble-menu__button--active': editor?.isActive('code') }"
-                    @mousedown.prevent
-                    @click="toggleInlineCode"
-                  >
-                    <OfficeIcon name="code" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-
-                  <div ref="tableColorMenuRef" class="norio-office-rich-table-bubble-menu__dropdown">
-                    <button
-                      type="button"
-                      class="norio-office-rich-table-bubble-menu__button norio-office-rich-table-bubble-menu__button--select"
-                      :class="{ 'norio-office-rich-table-bubble-menu__button--active': isTableColorMenuOpen }"
-                      @mousedown.prevent
-                      @click="toggleTableColorMenu"
-                    >
-                      <span class="norio-office-rich-toolbar__color-trigger norio-office-rich-toolbar__color-trigger--compact">
-                        <span class="norio-office-rich-toolbar__color-text">A</span>
-                        <span class="norio-office-rich-toolbar__color-line" :style="{ backgroundColor: currentTextColor }" />
-                      </span>
-                      <OfficeIcon name="xiangxiajiantou" :size="10" color="#9ca3af" background-color="transparent" />
-                    </button>
-
-                    <div v-if="isTableColorMenuOpen" class="norio-office-rich-table-bubble-menu__menu norio-office-rich-table-bubble-menu__menu--palette">
-                      <div class="norio-office-rich-color-menu__grid">
-                        <button
-                          v-for="color in colorGrid.flat()"
-                          :key="`table-color-${color}`"
-                          type="button"
-                          class="norio-office-rich-color-menu__swatch"
-                          :style="{ backgroundColor: color }"
-                          :class="{ 'norio-office-rich-color-menu__swatch--active': currentTextColor === color }"
-                          @mousedown.prevent
-                          @click="applyTableTextColor(color)"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div ref="tableHighlightMenuRef" class="norio-office-rich-table-bubble-menu__dropdown">
-                    <button
-                      type="button"
-                      class="norio-office-rich-table-bubble-menu__button norio-office-rich-table-bubble-menu__button--select"
-                      :class="{ 'norio-office-rich-table-bubble-menu__button--active': isTableHighlightMenuOpen }"
-                      @mousedown.prevent
-                      @click="toggleTableHighlightMenu"
-                    >
-                      <OfficeIcon name="beijingse" :size="14" color="#4b5563" background-color="transparent" />
-                      <span class="norio-office-rich-toolbar__color-line" :style="{ backgroundColor: currentHighlightColor }" />
-                      <OfficeIcon name="xiangxiajiantou" :size="10" color="#9ca3af" background-color="transparent" />
-                    </button>
-
-                    <div v-if="isTableHighlightMenuOpen" class="norio-office-rich-table-bubble-menu__menu norio-office-rich-table-bubble-menu__menu--palette">
-                      <div class="norio-office-rich-color-menu__grid">
-                        <button
-                          v-for="color in colorGrid.flat()"
-                          :key="`table-highlight-${color}`"
-                          type="button"
-                          class="norio-office-rich-color-menu__swatch"
-                          :style="{ backgroundColor: color }"
-                          :class="{ 'norio-office-rich-color-menu__swatch--active': currentHighlightColor === color }"
-                          @mousedown.prevent
-                          @click="applyTableHighlightColor(color)"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <span class="norio-office-rich-table-bubble-menu__divider" />
-
-                  <button type="button" class="norio-office-rich-table-bubble-menu__button" @mousedown.prevent @click="mergeTableCells">
-                    <OfficeIcon name="merge" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-                  <button type="button" class="norio-office-rich-table-bubble-menu__button" @mousedown.prevent @click="splitTableCell">
-                    <OfficeIcon name="split" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-                  <button type="button" class="norio-office-rich-table-bubble-menu__button" @mousedown.prevent @click="deleteCurrentTable">
-                    <OfficeIcon name="delete" :size="14" color="#4b5563" background-color="transparent" />
-                  </button>
-                </div>
                 <div class="norio-office-rich-table-bubble-menu__actions">
                   <button
                     type="button"
@@ -9534,70 +9390,7 @@ defineExpose<RichTextEditorInstance>({
                     <OfficeIcon name="delete" :size="14" :color="canDeleteTableSelection ? '#dc2626' : '#c5ccd8'" background-color="transparent" />
                   </button>
                 </div>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button"
-                  title="合并单元格"
-                  @mousedown.prevent
-                  @click="mergeTableCells"
-                >
-                    <OfficeIcon name="merge" :size="14" color="#4b5563" background-color="transparent" />
-                </button>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button"
-                  title="拆分单元格"
-                  @mousedown.prevent
-                  @click="splitTableCell"
-                >
-                    <OfficeIcon name="split" :size="14" color="#4b5563" background-color="transparent" />
-                </button>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button"
-                  title="添加行"
-                  @mousedown.prevent
-                  @click="addTableRow"
-                >
-                    <OfficeIcon name="xiangxiacharujilu-copy" :size="14" color="#4b5563" background-color="transparent" />
-                </button>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button"
-                  title="添加列"
-                  @mousedown.prevent
-                  @click="addTableColumn"
-                >
-                    <OfficeIcon name="add" :size="14" color="#4b5563" background-color="transparent" />
-                </button>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button"
-                  title="切换表头"
-                  @mousedown.prevent
-                  @click="toggleTableHeaderRow"
-                >
-                    <OfficeIcon name="jiacu" :size="14" color="#4b5563" background-color="transparent" />
-                </button>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button"
-                  title="删除行"
-                  @mousedown.prevent
-                  @click="deleteTableRow"
-                >
-                    <OfficeIcon name="jianshao" :size="14" color="#4b5563" background-color="transparent" />
-                </button>
-                <button
-                  type="button"
-                  class="norio-office-rich-table-bubble-menu__button norio-office-rich-table-bubble-menu__button--danger"
-                  title="删除表格"
-                  @mousedown.prevent
-                  @click="deleteCurrentTable"
-                >
-                  <OfficeIcon name="delete" :size="14" color="#dc2626" background-color="transparent" />
-                </button>
-              </BubbleMenu>
+              </TextSelectionMenu>
 
 
               <BubbleMenu

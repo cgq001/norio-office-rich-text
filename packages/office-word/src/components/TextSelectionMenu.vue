@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type CSSProperties } from 'vue'
 import type { Editor } from '@tiptap/core'
-import { TextSelection, type EditorState } from '@tiptap/pm/state'
+import { NodeSelection, TextSelection, type EditorState } from '@tiptap/pm/state'
+import { CellSelection } from '@tiptap/pm/tables'
 import type { EditorView } from '@tiptap/pm/view'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import ColorPalettePanel from './ColorPalettePanel.vue'
@@ -24,7 +25,15 @@ export type TextSelectionAction = {
   divider?: boolean
   fontFamily?: string
 }
-const props = defineProps<{ editor: Editor; actions: TextSelectionAction[]; enabled: boolean }>()
+const props = defineProps<{
+  editor: Editor
+  actions: TextSelectionAction[]
+  enabled: boolean
+  scope?: 'text' | 'table'
+  getReferencedVirtualElement?: () => { getBoundingClientRect: () => DOMRect; contextElement?: Element } | null
+}>()
+const pluginKey = props.scope === 'table' ? 'tableBubbleMenu' : 'textSelectionBubbleMenu'
+const emit = defineEmits<{ 'visibility-change': [visible: boolean] }>()
 const menuRef = ref<HTMLElement | null>(null)
 const panelRef = ref<HTMLElement | null>(null)
 const nestedPanelRef = ref<HTMLElement | null>(null)
@@ -33,6 +42,11 @@ const triggerRef = ref<HTMLElement | null>(null)
 const activeKey = ref<string | null>(null)
 const nestedKey = ref<string | null>(null)
 const dismissed = ref(false)
+const isPointerSelecting = ref(false)
+const isKeyboardSelecting = ref(false)
+const isBubbleShown = ref(false)
+const isSelecting = computed(() => isPointerSelecting.value || isKeyboardSelecting.value)
+const isBubbleVisible = computed(() => props.enabled && !dismissed.value && !isSelecting.value && isBubbleShown.value)
 const panelStyle = ref<CSSProperties>({})
 const nestedPanelStyle = ref<CSSProperties>({})
 const activeAction = computed(() => props.actions.find(action => action.key === activeKey.value))
@@ -72,15 +86,22 @@ function repositionNestedPanel() {
 
 function syncViewport() {
   if (!props.editor.isDestroyed && !props.editor.state.selection.empty && !dismissed.value && menuRef.value?.isConnected) {
-    props.editor.view.dispatch(props.editor.state.tr.setMeta('textSelectionBubbleMenu', 'updatePosition'))
+    props.editor.view.dispatch(props.editor.state.tr.setMeta(pluginKey, 'updatePosition'))
   }
   repositionPanel()
 }
 
 function shouldShow({ view, state, element }: { view: EditorView; state: EditorState; element: HTMLElement }) {
   if (!state.selection.eq(selection)) dismissed.value = false
-  return props.enabled && !dismissed.value && props.editor.isEditable && state.selection instanceof TextSelection
-    && !state.selection.empty && !!state.doc.textBetween(state.selection.from, state.selection.to).length
+  const { $from, $to } = state.selection
+  const isTableSelection = state.selection instanceof CellSelection
+    || (state.selection instanceof NodeSelection && state.selection.node.type.name === 'table')
+    || (state.selection instanceof TextSelection && Array.from({ length: $from.depth }, (_, index) => index + 1).some(depth =>
+      $from.node(depth).type.name === 'table' && $to.depth >= depth && $from.start(depth) === $to.start(depth)))
+  const hasTextSelection = state.selection instanceof TextSelection && !state.selection.empty
+    && !!state.doc.textBetween(state.selection.from, state.selection.to).length
+  const matchesScope = props.scope === 'table' ? isTableSelection && !state.selection.empty : hasTextSelection && !isTableSelection
+  return props.enabled && !dismissed.value && props.editor.isEditable && matchesScope
     && (view.hasFocus() || element.contains(document.activeElement))
 }
 
@@ -120,15 +141,34 @@ function handleSelectionUpdate() {
   selection = next
 }
 
-function handlePointerDown(event: MouseEvent) {
+function handlePointerDown(event: PointerEvent) {
   if (event.target instanceof Node && !menuRef.value?.contains(event.target)) {
     activeKey.value = null
     dismissed.value = true
+    if (event.button === 0 && props.editor.view.dom.contains(event.target)) isPointerSelecting.value = true
   }
 }
 
+function handlePointerUp() {
+  isPointerSelecting.value = false
+}
+
+function handleKeyUp(event: KeyboardEvent) {
+  if (!event.shiftKey || event.key === 'Shift') isKeyboardSelecting.value = false
+}
+
+function finishSelection() {
+  isPointerSelecting.value = false
+  isKeyboardSelecting.value = false
+}
+
 function handleKeyDown(event: KeyboardEvent) {
-  if (event.key !== 'Escape' || !menuRef.value?.isConnected) return
+  if (event.target instanceof Node && props.editor.view.dom.contains(event.target)
+    && ((event.shiftKey && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key))
+      || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'a'))) {
+    isKeyboardSelecting.value = true
+  }
+  if (event.key !== 'Escape' || !isBubbleVisible.value || !menuRef.value?.isConnected) return
   event.preventDefault()
   if (nestedKey.value) nestedKey.value = null
   else if (activeKey.value) activeKey.value = null
@@ -168,21 +208,34 @@ watch(() => props.enabled, (enabled) => {
   activeKey.value = null
   dismissed.value = !enabled
 })
+watch(isBubbleVisible, (visible) => emit('visibility-change', visible), { flush: 'sync' })
+watch(isSelecting, (selecting) => {
+  if (!selecting) void nextTick(syncViewport)
+})
 
 onMounted(() => {
   props.editor.on('selectionUpdate', handleSelectionUpdate)
-  document.addEventListener('mousedown', handlePointerDown, true)
-  document.addEventListener('keydown', handleKeyDown)
+  document.addEventListener('pointerdown', handlePointerDown, true)
+  document.addEventListener('pointerup', handlePointerUp, true)
+  document.addEventListener('pointercancel', handlePointerUp, true)
+  document.addEventListener('keydown', handleKeyDown, true)
+  document.addEventListener('keyup', handleKeyUp, true)
+  window.addEventListener('blur', finishSelection)
   window.addEventListener('resize', syncViewport)
   window.addEventListener('scroll', syncViewport, true)
 })
 onBeforeUnmount(() => {
+  emit('visibility-change', false)
   observer?.disconnect()
   nestedObserver?.disconnect()
   menuObserver?.disconnect()
   props.editor.off('selectionUpdate', handleSelectionUpdate)
-  document.removeEventListener('mousedown', handlePointerDown, true)
-  document.removeEventListener('keydown', handleKeyDown)
+  document.removeEventListener('pointerdown', handlePointerDown, true)
+  document.removeEventListener('pointerup', handlePointerUp, true)
+  document.removeEventListener('pointercancel', handlePointerUp, true)
+  document.removeEventListener('keydown', handleKeyDown, true)
+  document.removeEventListener('keyup', handleKeyUp, true)
+  window.removeEventListener('blur', finishSelection)
   window.removeEventListener('resize', syncViewport)
   window.removeEventListener('scroll', syncViewport, true)
 })
@@ -191,15 +244,18 @@ const appendTo = () => document.body
 const bubbleOptions = {
   strategy: 'fixed' as const, placement: 'top' as const, offset: 8,
   flip: { padding: 8 }, shift: { padding: 8, crossAxis: true },
-  onHide: () => { activeKey.value = null },
+  onShow: () => { isBubbleShown.value = true },
+  onHide: () => { activeKey.value = null; isBubbleShown.value = false },
   onUpdate: repositionPanel,
 }
 </script>
 
 <template>
   <BubbleMenu
-    v-show="enabled && !dismissed" class="norio-office-rich-text-bubble" plugin-key="textSelectionBubbleMenu"
+    v-show="enabled && !dismissed && !isSelecting"
+    :class="scope === 'table' ? 'norio-office-rich-table-bubble-menu' : 'norio-office-rich-text-bubble'" :plugin-key="pluginKey"
     :editor="editor" :should-show="shouldShow" :append-to="appendTo" :options="bubbleOptions" :update-delay="0"
+    :get-referenced-virtual-element="getReferencedVirtualElement"
   >
     <div ref="menuRef" class="norio-office-rich-text-bubble__content">
       <div class="norio-office-rich-text-bubble__toolbar" role="toolbar" aria-label="文字格式">
@@ -222,6 +278,7 @@ const bubbleOptions = {
           <OfficeIcon v-if="action.options || action.setColor" name="xiangxiajiantou" :size="10" color="#9aa4b2" background-color="transparent" />
         </button>
       </div>
+      <slot />
       <div
         v-if="activeAction && (activeAction.options || activeAction.setColor)" ref="panelRef"
         class="norio-office-rich-text-bubble__panel" :style="panelStyle" role="dialog" :aria-label="activeAction.label"

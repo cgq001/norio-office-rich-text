@@ -54,23 +54,25 @@ export const TextAlign = Extension.create({
       let tr = state.tr
       let changed = false
 
-      doc.nodesBetween(selection.from, selection.to, (node: { type: { name: string }; attrs: Record<string, unknown> }, pos: number) => {
-        if (!this.options.types.includes(node.type.name)) {
-          return
-        }
+      for (const { $from, $to } of selection.ranges) {
+        doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
+          if (!this.options.types.includes(node.type.name)) {
+            return
+          }
 
-        const nextAlign = alignment === 'left' ? null : alignment
-        if (node.attrs.textAlign === nextAlign) {
+          const nextAlign = alignment === 'left' ? null : alignment
+          if (node.attrs.textAlign === nextAlign) {
+            return false
+          }
+
+          tr = tr.setNodeMarkup(pos, undefined, {
+            ...node.attrs,
+            textAlign: nextAlign,
+          })
+          changed = true
           return false
-        }
-
-        tr = tr.setNodeMarkup(pos, undefined, {
-          ...node.attrs,
-          textAlign: nextAlign,
         })
-        changed = true
-        return false
-      })
+      }
 
       if (!changed) {
         const { $from } = selection
