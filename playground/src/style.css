@@ -1,0 +1,146 @@
+:root {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #0f172a;
+  background: #f5f7fb;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.playground-shell {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.playground-card {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.playground-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.playground-kicker {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.playground-header h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.playground-tip {
+  margin: 10px 0 0;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.playground-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  color: #475569;
+}
+
+.playground-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #f8fafc;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.playground-status[data-status='connected'] {
+  color: #166534;
+  background: #dcfce7;
+  border-color: #bbf7d0;
+}
+
+.playground-status[data-status='connecting'] {
+  color: #92400e;
+  background: #fef3c7;
+  border-color: #fde68a;
+}
+
+.playground-status[data-status='disconnected'] {
+  color: #991b1b;
+  background: #fee2e2;
+  border-color: #fecaca;
+}
+
+.playground-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.playground-info code {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+@media (max-width: 1200px) {
+  .playground-shell {
+    width: 100vw;
+  }
+
+  .playground-header {
+    flex-direction: column;
+  }
+}
+
+
+.mainEdit{
+  width: 100%;
+  height: 1000px;
+}
+
+.playground-loading {
+  display: grid;
+  min-height: 520px;
+  place-items: center;
+  color: #475569;
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}

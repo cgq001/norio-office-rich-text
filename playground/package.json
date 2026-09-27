@@ -1,0 +1,16 @@
+{
+  "name": "playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@norio-office/rich-text": "file:../packages/office-word",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.30"
+  }
+}

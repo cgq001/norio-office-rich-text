@@ -1,0 +1,7220 @@
+.norio-office-rich-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.norio-office-rich-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.norio-office-rich-icon--missing {
+  border: 1px dashed #f97316;
+  background: #fff7ed;
+}
+
+.norio-office-rich-scroll-area {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dce5 transparent;
+}
+
+.norio-office-rich-scroll-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.norio-office-rich-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.norio-office-rich-scroll-area::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #d7dce5;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #c5ccd8;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-editor {
+  --norio-office-rich-page-width: 1060px;
+  --norio-office-rich-page-height: 1120px;
+  --norio-office-rich-toolbar-height: 42px;
+  --norio-office-rich-statusbar-height: 40px;
+  --norio-office-rich-editor-bg: #f5f7fb;
+  --norio-office-rich-toolbar-bg: rgba(255, 255, 255, 0.98);
+  --norio-office-rich-toolbar-shell-bg: transparent;
+  --norio-office-rich-toolbar-border: transparent;
+  --norio-office-rich-toolbar-shadow: none;
+  --norio-office-rich-workspace-bg: #f5f7fb;
+  --norio-office-rich-page-bg: #ffffff;
+  --norio-office-rich-statusbar-bg: #ffffff;
+  --norio-office-rich-outline-bg: #ffffff;
+  --norio-office-rich-divider-color: #e6ebf3;
+  --norio-office-rich-text-color: #0f1b33;
+  --norio-office-rich-muted-color: #65738a;
+  --norio-office-rich-selection-accent: #1677ff;
+  --norio-office-rich-hover-bg: #f3f6fb;
+  --norio-office-rich-active-bg: #eaf3ff;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--norio-office-rich-editor-bg);
+  color: var(--norio-office-rich-text-color);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  overflow: hidden;
+}
+
+@keyframes norio-office-rich-upload-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.norio-office-rich-upload-spinner {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  border: 2px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-radius: 999px;
+  box-sizing: border-box;
+  animation: norio-office-rich-upload-spin 0.8s linear infinite;
+}
+
+.norio-office-rich-editor[data-fullscreen='true'] {
+  height: 100%;
+}
+
+.norio-office-rich-editor[data-presentation='true'] {
+  --norio-office-rich-editor-bg: var(--norio-office-rich-page-bg);
+  --norio-office-rich-workspace-bg: var(--norio-office-rich-page-bg);
+  background: var(--norio-office-rich-page-bg);
+}
+
+.norio-office-rich-editor[data-presentation='true'],
+.norio-office-rich-editor[data-presentation='true'] * {
+  cursor: none !important;
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-editor__toolbar,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-editor__statusbar,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-upload-panel,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-outline,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-outline-shell,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-outline-trigger,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-marquee-selection-layer,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-image-block__toolbar,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-image-block__caption-input,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-video-block__toolbar,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-video-block__dialog,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-link-block__toolbar,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-link-block__dialog,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-local-file-block__actions,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-countdown-block__actions,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-countdown-dialog,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-countdown-color-panel,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-highlight-block__emoji-picker,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-countdown-bubble-menu,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-table-bubble-menu,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-mention-panel,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-comment-panel,
+.norio-office-rich-editor[data-presentation='true'] .collaboration-carets__caret,
+.norio-office-rich-editor[data-presentation='true'] .collaboration-carets__label,
+.norio-office-rich-editor[data-presentation='true'] .collaboration-carets__selection {
+  display: none !important;
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-highlight-block__emoji-slot,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-countdown-block,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-image-block,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-video-block,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-link-block,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-local-file-block {
+  pointer-events: none;
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-editor__workspace,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-editor__scroll,
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-scroll-area {
+  background: var(--norio-office-rich-page-bg);
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-editor__stage {
+  min-width: 100%;
+  padding: 0;
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-editor__page {
+  box-shadow: none;
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-prosemirror {
+  padding-top: 32px;
+  padding-bottom: 56px;
+}
+
+.norio-office-rich-editor__toolbar {
+  position: relative;
+  z-index: 30;
+  flex: 0 0 auto;
+  height: var(--norio-office-rich-toolbar-height);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 18px;
+  border-bottom: 1px solid #e9eef6;
+  background: var(--norio-office-rich-toolbar-bg);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+  box-sizing: border-box;
+  overflow: visible;
+  backdrop-filter: saturate(140%) blur(8px);
+}
+
+.norio-office-rich-editor__toolbar-shell {
+  min-width: 0;
+  flex: 1 1 auto;
+  height: 100%;
+  display: flex;
+  justify-content: stretch;
+  overflow: visible;
+}
+
+.norio-office-rich-editor__toolbar-scroll {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: visible;
+  scrollbar-width: none;
+  background: var(--norio-office-rich-toolbar-shell-bg);
+  border: 1px solid var(--norio-office-rich-toolbar-border);
+  border-radius: 10px;
+  box-shadow: var(--norio-office-rich-toolbar-shadow);
+  position: relative;
+}
+
+.norio-office-rich-editor__toolbar-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.norio-office-rich-editor__toolbar-track {
+  min-width: max-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.norio-office-rich-editor__toolbar-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.norio-office-rich-toolbar__group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 8px;
+  margin-right: 7px;
+  border-right: 1px solid #edf1f7;
+}
+
+.norio-office-rich-toolbar__group:last-child {
+  border-right: 0;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.norio-office-rich-toolbar__group--insert {
+  order: initial;
+}
+
+.norio-office-rich-toolbar__button {
+  min-width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.14s ease,
+    color 0.14s ease,
+    box-shadow 0.14s ease;
+}
+
+.norio-office-rich-toolbar__button:hover {
+  background: #edf4ff;
+  color: #1d4ed8;
+}
+
+.norio-office-rich-toolbar__button:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.16) !important;
+}
+
+.norio-office-rich-toolbar__button:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.24) !important;
+}
+
+.norio-office-rich-toolbar__button:disabled {
+  cursor: default;
+  color: #b8c1cf;
+  opacity: 1;
+}
+
+.norio-office-rich-toolbar__button:disabled:hover {
+  background: transparent;
+}
+
+.norio-office-rich-toolbar__button--active {
+  border-color: #bfdbfe !important;
+  background: #e8f1ff !important;
+  color: #1d4ed8 !important;
+  box-shadow: none !important;
+}
+
+.norio-office-rich-editor .norio-office-rich-editor__toolbar .norio-office-rich-toolbar__button:focus,
+.norio-office-rich-editor .norio-office-rich-editor__toolbar .norio-office-rich-toolbar__button:focus-visible {
+  outline: none !important;
+}
+
+.norio-office-rich-editor .norio-office-rich-editor__toolbar .norio-office-rich-toolbar__button.norio-office-rich-toolbar__button--active {
+  border-color: #bfdbfe !important;
+  box-shadow: none !important;
+}
+
+.norio-office-rich-toolbar__button--select {
+  padding: 0 8px;
+  background: transparent;
+}
+
+.norio-office-rich-toolbar__button--heading {
+  width: 82px;
+  justify-content: space-between;
+}
+
+.norio-office-rich-toolbar__button--font-size {
+  width: 50px;
+  justify-content: space-between;
+}
+
+.norio-office-rich-toolbar__button--font-family {
+  width: 82px;
+  justify-content: space-between;
+}
+
+.norio-office-rich-toolbar__button--color {
+  min-width: 32px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.norio-office-rich-toolbar__heading-label {
+  width: 48px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-toolbar__color-trigger {
+  width: 16px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.norio-office-rich-toolbar__color-text {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.norio-office-rich-toolbar__color-line {
+  width: 12px;
+  height: 2px;
+  border-radius: 999px;
+  background: #333333;
+}
+
+.norio-office-rich-toolbar__menu-dot {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #c7ced8;
+  border-radius: 999px;
+  position: relative;
+}
+
+.norio-office-rich-toolbar__menu-dot::before,
+.norio-office-rich-toolbar__menu-dot::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  height: 1px;
+  background: #98a2b3;
+}
+
+.norio-office-rich-toolbar__menu-dot::before {
+  top: 4px;
+}
+
+.norio-office-rich-toolbar__menu-dot::after {
+  bottom: 4px;
+}
+
+.norio-office-rich-toolbar__label {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.norio-office-rich-toolbar__text-icon {
+  min-width: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.norio-office-rich-toolbar__button > .norio-office-rich-icon {
+  width: 15px !important;
+  height: 15px !important;
+  color: inherit !important;
+  background: transparent !important;
+}
+
+.norio-office-rich-toolbar__button > .norio-office-rich-icon[data-name='xiangxiajiantou'] {
+  width: 10px !important;
+  height: 10px !important;
+  color: #94a3b8 !important;
+}
+
+.norio-office-rich-toolbar__button:hover > .norio-office-rich-icon[data-name='xiangxiajiantou'],
+.norio-office-rich-toolbar__button--active > .norio-office-rich-icon[data-name='xiangxiajiantou'] {
+  color: #3b82f6 !important;
+}
+
+.norio-office-rich-toolbar__text-icon--strike {
+  color: #666666;
+}
+
+.norio-office-rich-toolbar__caret {
+  color: #9ca3af;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.norio-office-rich-toolbar__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-toolbar__menu {
+  min-width: 184px;
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  z-index: 80;
+  padding: 7px 0;
+  border: 1px solid #e4eaf3;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow:
+    0 18px 42px rgba(15, 23, 42, 0.12),
+    0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-toolbar__menu--heading {
+  min-width: 180px;
+}
+
+.norio-office-rich-toolbar__menu--font-size {
+  min-width: 90px;
+}
+
+.norio-office-rich-toolbar__menu--font-family {
+  min-width: 144px;
+}
+
+.norio-office-rich-toolbar__menu--align {
+  min-width: 148px;
+}
+
+.norio-office-rich-toolbar__menu--color {
+  width: 264px;
+  padding: 10px 0 0;
+}
+
+.norio-office-rich-toolbar__menu--quote {
+  width: 264px;
+  padding: 10px 0 0;
+}
+
+.norio-office-rich-toolbar__menu--emoji {
+  width: 450px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.norio-office-rich-toolbar__menu--insert {
+  width: 214px;
+  padding: 10px 0 8px;
+  overflow: visible;
+}
+
+.norio-office-rich-insert-menu {
+  position: relative;
+}
+
+.norio-office-rich-insert-menu__main {
+  width: 214px;
+}
+
+.norio-office-rich-insert-menu__scroll {
+  width: 214px;
+  max-height: inherit;
+  overflow-x: hidden;
+}
+
+.norio-office-rich-toolbar__menu-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16px 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.norio-office-rich-toolbar__menu-item--heading {
+  grid-template-columns: 16px 22px minmax(0, 1fr);
+}
+
+.norio-office-rich-toolbar__menu-item--font-size {
+  grid-template-columns: 16px minmax(0, 1fr);
+  min-width: 90px;
+}
+
+.norio-office-rich-toolbar__menu-item--font-family {
+  grid-template-columns: 16px minmax(0, 1fr);
+  min-width: 144px;
+}
+
+.norio-office-rich-toolbar__menu-item--align {
+  grid-template-columns: 16px 20px minmax(0, 1fr);
+}
+
+.norio-office-rich-toolbar__menu-item:hover,
+.norio-office-rich-toolbar__menu-item--active {
+  background: #f2f7ff;
+  color: #1d4ed8;
+}
+
+.norio-office-rich-toolbar__menu-item:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.norio-office-rich-toolbar__menu-item:disabled:hover {
+  background: transparent;
+}
+
+.norio-office-rich-toolbar__menu-check {
+  width: 16px;
+  height: 16px;
+}
+
+.norio-office-rich-toolbar__menu-label {
+  white-space: nowrap;
+}
+
+.norio-office-rich-toolbar__menu-type {
+  color: #374151;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.norio-office-rich-toolbar__menu-shortcut {
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.norio-office-rich-insert-menu__quick-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+  padding: 2px 12px 11px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.norio-office-rich-insert-menu__quick-item {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #334155;
+  cursor: pointer;
+  transition:
+    background-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.norio-office-rich-insert-menu__quick-item:hover {
+  background: #edf4ff;
+  color: #1d4ed8;
+}
+
+.norio-office-rich-insert-menu__quick-item:focus-visible,
+.norio-office-rich-insert-menu__item:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.24);
+  outline-offset: -2px;
+}
+
+.norio-office-rich-insert-menu__quick-text {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.norio-office-rich-insert-menu__section {
+  padding: 10px 0 0;
+}
+
+.norio-office-rich-insert-menu__title {
+  padding: 0 12px 7px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.norio-office-rich-insert-menu__item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: #334155;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.norio-office-rich-insert-menu__item:hover {
+  background: #f2f7ff;
+  color: #1d4ed8;
+}
+
+.norio-office-rich-insert-menu__item--active {
+  background: #f2f7ff;
+  color: #1d4ed8;
+}
+
+.norio-office-rich-insert-menu__icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-insert-menu__label {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.norio-office-rich-insert-submenu {
+  position: absolute;
+  top: 58px;
+  left: calc(100% + 8px);
+  width: 272px;
+  padding: 14px 14px 10px;
+  border: 1px solid #e5eaf3;
+  border-radius: 0;
+  background: #ffffff;
+  z-index: 20;
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-insert-submenu__title {
+  display: none;
+}
+
+.norio-office-rich-insert-submenu__title--preview {
+  display: block;
+  margin-bottom: 12px;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.norio-office-rich-table-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 7px;
+}
+
+.norio-office-rich-table-grid__cell {
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  border: 1px solid #c9cfda;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.norio-office-rich-table-grid__cell:focus-visible {
+  outline: 2px solid rgba(47, 107, 255, 0.18);
+  outline-offset: 1px;
+}
+
+.norio-office-rich-table-grid__cell:hover,
+.norio-office-rich-table-grid__cell--active {
+  border-color: #2f6bff;
+  background: #f8fbff;
+  box-shadow: inset 0 0 0 1px rgba(47, 107, 255, 0.08);
+}
+
+.norio-office-rich-insert-submenu--columns {
+  width: 240px;
+  transform: translateY(calc(-50% - 8px));
+}
+
+.norio-office-rich-insert-submenu--countdown {
+  width: 420px;
+  padding: 0;
+  transform: translateY(calc(-50% - 8px));
+}
+
+.norio-office-rich-columns-picker {
+  padding: 10px;
+  border: 1px solid #d9e0eb;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.norio-office-rich-columns-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.norio-office-rich-columns-picker__cell {
+  padding: 0;
+  border: 0;
+  height: 72px;
+  border-radius: 0;
+  background: #eef2f7;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.norio-office-rich-columns-picker__cell--active {
+  background: #dfe6ff;
+}
+
+.norio-office-rich-countdown-settings {
+  position: relative;
+  min-height: 160px;
+  padding: 18px 18px 16px;
+}
+
+.norio-office-rich-countdown-settings__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.norio-office-rich-countdown-settings__title {
+  color: #111827;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.norio-office-rich-countdown-settings__close {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__row {
+  display: grid;
+  grid-template-columns: 20px 74px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.norio-office-rich-countdown-settings__row + .norio-office-rich-countdown-settings__row {
+  margin-top: 12px;
+}
+
+.norio-office-rich-countdown-settings__row--duration {
+  align-items: center;
+}
+
+.norio-office-rich-countdown-settings__row--deadline {
+  position: relative;
+}
+
+.norio-office-rich-countdown-settings__radio {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-countdown-settings__radio input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__radio-dot {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #c9d1de;
+  border-radius: 999px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.norio-office-rich-countdown-settings__radio input:checked + .norio-office-rich-countdown-settings__radio-dot {
+  border-color: #4c72ff;
+}
+
+.norio-office-rich-countdown-settings__radio input:checked + .norio-office-rich-countdown-settings__radio-dot::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 999px;
+  background: #4c72ff;
+}
+
+.norio-office-rich-countdown-settings__label {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.norio-office-rich-countdown-settings__datetime {
+  width: 100%;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 12px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__datetime:disabled,
+.norio-office-rich-countdown-settings__number:disabled {
+  background: #f5f7fb;
+  color: #9ca3af;
+}
+
+.norio-office-rich-countdown-settings__picker-panel {
+  position: absolute;
+  left: 102px;
+  width: 340px;
+  padding: 12px 14px 14px;
+  border: 1px solid #e5eaf3;
+  border-radius: 0;
+  background: #ffffff;
+  z-index: 4;
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.08),
+    0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.norio-office-rich-countdown-settings__picker-panel--bottom {
+  top: calc(100% + 12px);
+}
+
+.norio-office-rich-countdown-settings__picker-panel--top {
+  bottom: calc(100% + 12px);
+}
+
+.norio-office-rich-countdown-settings__picker-top {
+  display: grid;
+  grid-template-columns: 92px 56px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.norio-office-rich-countdown-settings__picker-select {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  outline: none;
+}
+
+.norio-office-rich-countdown-settings__today {
+  justify-self: end;
+  min-width: 72px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.norio-office-rich-countdown-settings__weekday {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  color: #4b5563;
+  font-size: 12px;
+}
+
+.norio-office-rich-countdown-settings__calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.norio-office-rich-countdown-settings__day {
+  width: 30px;
+  height: 30px;
+  justify-self: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #111827;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__day--muted {
+  color: #c2c8d2;
+}
+
+.norio-office-rich-countdown-settings__day--today {
+  color: #4c72ff;
+}
+
+.norio-office-rich-countdown-settings__day--selected {
+  background: #4c72ff;
+  color: #ffffff;
+}
+
+.norio-office-rich-countdown-settings__day--disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.norio-office-rich-countdown-settings__time-section {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  margin-top: 12px;
+}
+
+.norio-office-rich-countdown-settings__time-label {
+  padding-top: 7px;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.norio-office-rich-countdown-settings__time-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.norio-office-rich-countdown-settings__time-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #4c72ff;
+  border-radius: 0;
+  outline: none;
+  color: #111827;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-countdown-settings__time-confirm {
+  flex: 0 0 auto;
+  min-width: 56px;
+  height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: #4c72ff;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.norio-office-rich-countdown-settings__number {
+  width: 42px;
+  height: 40px;
+  padding: 0 8px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  outline: none;
+  color: #111827;
+  font-size: 13px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-countdown-settings__unit {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.norio-office-rich-countdown-settings__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.norio-office-rich-countdown-settings__button {
+  min-width: 92px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-settings__button--secondary {
+  border: 1px solid #d7deea;
+  background: #ffffff;
+  color: #374151;
+}
+
+.norio-office-rich-countdown-settings__button--primary {
+  border: 0;
+  background: #4c72ff;
+  color: #ffffff;
+}
+
+.norio-office-rich-insert-submenu__footer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #eef1f5;
+}
+
+.norio-office-rich-insert-submenu__ai {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 2px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-insert-submenu__ai:hover {
+  color: #111827;
+}
+
+.norio-office-rich-insert-submenu--emoji {
+  width: 450px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.norio-office-rich-color-menu__section {
+  padding: 0 12px 10px;
+}
+
+.norio-office-rich-toolbar__menu--quote .norio-office-rich-color-menu__section + .norio-office-rich-color-menu__section {
+  padding-top: 8px;
+}
+
+.norio-office-rich-color-menu__current {
+  width: 100%;
+  height: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-color-menu__label {
+  margin-bottom: 6px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.norio-office-rich-color-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(10, 20px);
+  gap: 4px;
+  justify-content: center;
+}
+
+.norio-office-rich-color-menu__row {
+  display: grid;
+  grid-template-columns: repeat(10, 20px);
+  gap: 4px;
+  justify-content: center;
+}
+
+.norio-office-rich-color-menu__swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.norio-office-rich-color-menu__swatch--compact {
+  width: 22px;
+  height: 22px;
+}
+
+.norio-office-rich-color-menu__swatch--recent,
+.norio-office-rich-color-menu__swatch--empty {
+  width: 20px;
+  height: 20px;
+}
+
+.norio-office-rich-color-menu__swatch--empty {
+  display: inline-block;
+  background: #ffffff;
+}
+
+.norio-office-rich-color-menu__swatch--active {
+  outline: 2px solid #2f6bff;
+  outline-offset: 1px;
+}
+
+.norio-office-rich-color-menu__footer {
+  border-top: 1px solid #eef1f5;
+  padding: 10px 12px;
+}
+
+.norio-office-rich-color-menu__more {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-color-menu__rainbow {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: conic-gradient(from 180deg, #ff4d4f, #faad14, #52c41a, #13c2c2, #1677ff, #722ed1, #ff4d4f);
+}
+
+.norio-office-rich-color-menu__arrow {
+  margin-left: auto;
+  color: #9ca3af;
+}
+
+.norio-office-rich-color-menu__picker {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.norio-office-rich-editor__main {
+  min-height: 0;
+  flex: 1 1 auto;
+  display: flex;
+  gap: 8px;
+  padding: 8px 24px 8px 24px;
+  background: var(--norio-office-rich-workspace-bg);
+  overflow: hidden;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dce5 transparent;
+}
+
+.norio-office-rich-editor__main::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.norio-office-rich-editor__main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.norio-office-rich-editor__main::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #d7dce5;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-editor__main::-webkit-scrollbar-thumb:hover {
+  background: #c5ccd8;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-outline {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  overflow: visible;
+  pointer-events: auto;
+}
+
+.norio-office-rich-outline-shell {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  width: 288px;
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.norio-office-rich-outline-trigger {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 20;
+  box-sizing: border-box;
+  width: 32px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--norio-office-rich-divider-color);
+  border-left: 0;
+  border-radius: 0 6px 6px 0;
+  background: var(--norio-office-rich-outline-bg);
+  color: #64748b;
+  box-shadow: 3px 0 12px rgba(15, 23, 42, 0.08);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.norio-office-rich-outline-trigger[data-placement='right'] {
+  right: 0;
+  left: auto;
+  border-left: 1px solid var(--norio-office-rich-divider-color);
+  border-right: 0;
+  border-radius: 6px 0 0 6px;
+  box-shadow: -3px 0 12px rgba(15, 23, 42, 0.08);
+}
+
+.norio-office-rich-outline-trigger:hover {
+  background: #f0f6ff;
+  color: #3478ff;
+}
+
+.norio-office-rich-outline-trigger:focus-visible {
+  outline: 2px solid #3478ff;
+  outline-offset: -2px;
+}
+
+.norio-office-rich-color-palette .norio-office-rich-color-menu__grid,
+.norio-office-rich-color-palette .norio-office-rich-color-menu__row {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.norio-office-rich-color-palette .norio-office-rich-color-menu__swatch {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-editor[data-outline-placement='right'] .norio-office-rich-outline-shell {
+  right: 0;
+  left: auto;
+}
+
+.norio-office-rich-editor[data-outline-placement='left'] .norio-office-rich-outline-shell {
+  left: 0;
+  right: auto;
+}
+
+.norio-office-rich-outline-shell[data-open='false'] {
+  pointer-events: none;
+}
+
+.norio-office-rich-outline[data-open='false'] {
+  visibility: hidden;
+}
+
+.norio-office-rich-outline--standalone {
+  min-height: 200px;
+  height: auto;
+}
+
+.norio-office-rich-outline--internal {
+  height: 100%;
+  min-height: 0;
+}
+
+.norio-office-rich-outline__chrome {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--norio-office-rich-divider-color);
+  border-radius: 10px;
+  background: var(--norio-office-rich-outline-bg);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.norio-office-rich-outline--internal .norio-office-rich-outline__chrome {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.norio-office-rich-outline--internal[data-placement='left'] .norio-office-rich-outline__chrome {
+  border-left: 0;
+  box-shadow: 8px 0 24px rgba(15, 23, 42, 0.08);
+}
+
+.norio-office-rich-outline--internal[data-placement='right'] .norio-office-rich-outline__chrome {
+  border-right: 0;
+  box-shadow: -8px 0 24px rgba(15, 23, 42, 0.08);
+}
+
+.norio-office-rich-editor[data-outline-placement='left'] .norio-office-rich-outline__chrome {
+  left: auto;
+  right: auto;
+}
+
+.norio-office-rich-outline[data-open='false'] .norio-office-rich-outline__chrome {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(12px);
+}
+
+.norio-office-rich-editor[data-outline-placement='left'] .norio-office-rich-outline[data-open='false'] .norio-office-rich-outline__chrome {
+  transform: translateX(-12px);
+}
+
+.norio-office-rich-outline__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 18px 10px;
+}
+
+.norio-office-rich-outline__title {
+  color: #24324b;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.norio-office-rich-outline__collapse {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-outline__collapse-icon {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+
+.norio-office-rich-outline__collapse:hover {
+  background: rgba(76, 125, 255, 0.08);
+}
+
+.norio-office-rich-outline__body {
+  min-height: 0;
+  flex: 0 1 auto;
+  display: flex;
+  padding: 4px 14px 16px;
+}
+
+.norio-office-rich-outline--internal .norio-office-rich-outline__body {
+  flex: 1 1 auto;
+}
+
+.norio-office-rich-outline__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.norio-office-rich-outline__item {
+  --norio-office-rich-outline-level: 0;
+  width: 100%;
+  min-height: 32px;
+  padding: 6px 10px 6px calc(10px + (var(--norio-office-rich-outline-level) * 16px));
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: #66758d;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.norio-office-rich-outline__item:hover {
+  background: #f5f8fc;
+}
+
+.norio-office-rich-outline__item--active {
+  background: #edf6ff;
+  color: #1f73ff;
+}
+
+.norio-office-rich-outline__item-text {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.norio-office-rich-outline__item[data-level='1'] .norio-office-rich-outline__item-text {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.norio-office-rich-outline__item[data-level='2'] {
+  color: #738199;
+}
+
+.norio-office-rich-outline__item[data-level='3'],
+.norio-office-rich-outline__item[data-level='4'],
+.norio-office-rich-outline__item[data-level='5'],
+.norio-office-rich-outline__item[data-level='6'] {
+  color: #8792a6;
+}
+
+.norio-office-rich-outline__item[data-level='3'] .norio-office-rich-outline__item-text,
+.norio-office-rich-outline__item[data-level='4'] .norio-office-rich-outline__item-text,
+.norio-office-rich-outline__item[data-level='5'] .norio-office-rich-outline__item-text,
+.norio-office-rich-outline__item[data-level='6'] .norio-office-rich-outline__item-text {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.norio-office-rich-outline__item--active .norio-office-rich-outline__item-text {
+  font-weight: 700;
+}
+
+.norio-office-rich-outline__empty {
+  margin-top: auto;
+  padding: 16px 2px 20px;
+  color: #a1a8b3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.norio-office-rich-outline__empty p {
+  margin: 0;
+}
+
+.norio-office-rich-editor__workspace {
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  order: 1;
+  background: var(--norio-office-rich-workspace-bg);
+  overflow: hidden;
+}
+
+.norio-office-rich-comment-panel {
+  order: 2;
+  flex: 0 0 308px;
+  width: 308px;
+  min-width: 308px;
+  height: calc(100% - 20px);
+  max-height: calc(100% - 20px);
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e3e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.norio-office-rich-editor[data-comments-open='true'][data-outline-placement='left'] .norio-office-rich-comment-panel {
+  order: 3;
+}
+
+.norio-office-rich-comment-panel__header {
+  flex: 0 0 auto;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #e8edf5;
+  color: #24324b;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.norio-office-rich-comment-panel__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 14px;
+}
+
+.norio-office-rich-comment-panel__empty {
+  padding: 48px 0;
+  color: #99a3b3;
+  font-size: 13px;
+  text-align: center;
+}
+
+.norio-office-rich-comment-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.norio-office-rich-comment-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 12px 12px;
+  border: 1px solid #dfe5ee;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+}
+
+.norio-office-rich-comment-card--active {
+  border-color: #7aa5ff;
+  box-shadow: 0 14px 30px rgba(76, 125, 255, 0.16);
+}
+
+.norio-office-rich-comment-card--pending {
+  border-color: #ffc44d;
+}
+
+.norio-office-rich-comment-card__topline {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 5px;
+  border-radius: 8px 8px 0 0;
+  background: #ffc400;
+}
+
+.norio-office-rich-comment-card__anchor {
+  max-width: calc(100% - 92px);
+  padding-left: 10px;
+  border-left: 2px solid #cbd5e1;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.norio-office-rich-comment-card__actions {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.norio-office-rich-comment-card__actions button,
+.norio-office-rich-comment-composer__actions button,
+.norio-office-rich-comment-item__actions button {
+  min-width: 0;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.norio-office-rich-comment-card__actions button {
+  width: 26px;
+  padding: 0;
+  border-color: #e1e7f0;
+  background: #ffffff;
+}
+
+.norio-office-rich-comment-card__actions button:hover,
+.norio-office-rich-comment-composer__actions button:hover,
+.norio-office-rich-comment-item__actions button:hover {
+  background: #f3f6fb;
+}
+
+.norio-office-rich-comment-card__actions button:disabled,
+.norio-office-rich-comment-composer__actions button:disabled {
+  color: #b8c0ce;
+  cursor: default;
+  background: transparent;
+}
+
+.norio-office-rich-comment-card__check {
+  color: #16a34a;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.norio-office-rich-comment-card__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.norio-office-rich-comment-card__empty {
+  color: #9aa5b5;
+  font-size: 12px;
+}
+
+.norio-office-rich-comment-item {
+  display: flex;
+  gap: 10px;
+}
+
+.norio-office-rich-comment-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  padding-left: 8px;
+  border-left: 2px solid #edf1f7;
+}
+
+.norio-office-rich-comment-item--reply {
+  gap: 8px;
+}
+
+.norio-office-rich-comment-item--reply .norio-office-rich-comment-item__avatar {
+  width: 26px;
+  height: 26px;
+  flex-basis: 26px;
+  font-size: 10px;
+}
+
+.norio-office-rich-comment-item__avatar {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.norio-office-rich-comment-item__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.norio-office-rich-comment-item__body {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.norio-office-rich-comment-item__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  color: #667085;
+  font-size: 12px;
+}
+
+.norio-office-rich-comment-item__meta strong {
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.norio-office-rich-comment-item__content {
+  color: #111827;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.norio-office-rich-comment-item__actions {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.norio-office-rich-comment-images,
+.norio-office-rich-comment-draft-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.norio-office-rich-comment-images__item,
+.norio-office-rich-comment-draft-images__item {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  border: 1px solid #e1e7f0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.norio-office-rich-comment-images__item {
+  padding: 0;
+  cursor: zoom-in;
+}
+
+.norio-office-rich-comment-images__item:hover {
+  border-color: #4c7dff;
+  box-shadow: 0 0 0 2px rgba(76, 125, 255, 0.12);
+}
+
+.norio-office-rich-comment-images__item img,
+.norio-office-rich-comment-draft-images__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.norio-office-rich-comment-draft-images__item button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.72);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.norio-office-rich-comment-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.norio-office-rich-comment-composer--inline {
+  margin-top: 10px;
+  padding-left: 8px;
+  border-left: 2px solid #dbe7ff;
+}
+
+.norio-office-rich-comment-composer__input {
+  width: 100%;
+  min-height: 36px;
+  resize: vertical;
+  padding: 8px 10px;
+  border: 1px solid #cfd8e5;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #111827;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.norio-office-rich-comment-composer__input:focus {
+  border-color: #4c7dff;
+  box-shadow: 0 0 0 2px rgba(76, 125, 255, 0.12);
+}
+
+.norio-office-rich-comment-composer__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.norio-office-rich-comment-composer__spacer {
+  flex: 1 1 auto;
+}
+
+.norio-office-rich-comment-composer__submit {
+  border-color: #4c7dff !important;
+  background: #4c7dff !important;
+  color: #ffffff !important;
+}
+
+.norio-office-rich-comment-composer__submit:disabled {
+  border-color: #dbe2ee !important;
+  background: #eef2f7 !important;
+  color: #a2adbd !important;
+}
+
+.norio-office-rich-editor__scroll {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.norio-office-rich-editor__stage {
+  min-width: calc(var(--norio-office-rich-page-width) * var(--norio-office-rich-page-scale));
+  display: flex;
+  justify-content: center;
+  padding: 0 8px 12px;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-editor__page {
+  position: relative;
+  width: var(--norio-office-rich-page-width);
+  min-height: var(--norio-office-rich-page-height);
+  background: var(--norio-office-rich-page-bg);
+  border: 1px solid var(--norio-office-rich-divider-color);
+  border-radius: 8px;
+  transform: scale(var(--norio-office-rich-page-scale));
+  transform-origin: top center;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.035);
+  overflow: visible;
+}
+
+.norio-office-rich-editor__watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 136px;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  border-radius: inherit;
+  color: var(--norio-office-rich-watermark-color, rgba(15, 23, 42, 0.12));
+  font-size: var(--norio-office-rich-watermark-font-size, 18px);
+  font-weight: 600;
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.norio-office-rich-editor__watermark-text {
+  max-width: 220px;
+  display: inline-block;
+  line-height: 1.35;
+  text-align: center;
+  transform: rotate(var(--norio-office-rich-watermark-rotate, -24deg));
+  white-space: nowrap;
+}
+
+.norio-office-rich-editor[data-mode='preview'] .norio-office-rich-editor__workspace {
+  background:
+    radial-gradient(circle at top, rgba(15, 23, 42, 0.025), transparent 20%),
+    var(--norio-office-rich-workspace-bg);
+}
+
+.norio-office-rich-editor__content {
+  position: relative;
+  z-index: 2;
+  min-height: var(--norio-office-rich-page-height);
+}
+
+.norio-office-rich-comment-mark {
+  border-bottom: 2px solid #ffc400;
+  background: rgba(255, 196, 0, 0.18);
+  border-radius: 3px;
+  cursor: pointer;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.norio-office-rich-comment-mark:hover {
+  background: rgba(255, 196, 0, 0.32);
+}
+
+.norio-office-rich-editor[data-comments-enabled='false'] .norio-office-rich-comment-mark,
+.norio-office-rich-editor[data-comments-enabled='false'] .norio-office-rich-comment-mark:hover {
+  border-bottom-color: transparent;
+  background: transparent;
+  cursor: text;
+}
+
+.norio-office-rich-comment-image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 2605;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 84px;
+  background: rgba(15, 23, 42, 0.82);
+}
+
+.norio-office-rich-comment-image-viewer__stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-comment-image-viewer__image {
+  max-width: 100%;
+  max-height: calc(100vh - 160px);
+  display: block;
+  object-fit: contain;
+}
+
+.norio-office-rich-comment-image-viewer__meta {
+  margin-top: 18px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.norio-office-rich-comment-image-viewer__name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.norio-office-rich-comment-image-viewer__desc {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+}
+
+.norio-office-rich-comment-image-viewer__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.38);
+  cursor: pointer;
+}
+
+.norio-office-rich-comment-image-viewer__close:hover {
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.norio-office-rich-marquee-selection-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.norio-office-rich-marquee-selection-layer__box {
+  position: absolute;
+  border: 1px solid rgba(76, 114, 255, 0.7);
+  background: rgba(76, 114, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(76, 114, 255, 0.08);
+}
+
+.norio-office-rich-marquee-selection-layer__block {
+  position: absolute;
+  border: 1px solid rgba(76, 114, 255, 0.82);
+  border-radius: 0;
+  background: rgba(76, 114, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(76, 114, 255, 0.08); 
+}
+
+.norio-office-rich-editor[data-drag-insert-active='true'] .ProseMirror-dropcursor,
+.norio-office-rich-editor[data-drag-insert-active='true'] .ProseMirror-gapcursor {
+  display: none !important;
+}
+
+.norio-office-rich-drag-insert-indicator {
+  position: absolute;
+  z-index: 18;
+  height: 14px;
+  pointer-events: none;
+  transform: translateY(-7px);
+}
+
+.norio-office-rich-drag-insert-indicator__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 2px;
+}
+
+.norio-office-rich-drag-insert-indicator__line,
+.norio-office-rich-dropcursor {
+  border-radius: 999px;
+  background: #3478ff;
+  box-shadow: 0 3px 10px rgba(52, 120, 255, 0.22);
+}
+
+.norio-office-rich-drag-insert-indicator__line::before,
+.norio-office-rich-dropcursor.prosemirror-dropcursor-block::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3478ff;
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 3px rgba(52, 120, 255, 0.14);
+}
+
+.norio-office-rich-block-side-control {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 24;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  height: 26px;
+  padding: 1px 2px;
+  border: 1px solid rgba(209, 216, 228, 0.95);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-block-side-control--empty {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.norio-office-rich-block-side-control__button {
+  box-sizing: border-box;
+  width: 21px;
+  height: 22px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.norio-office-rich-block-side-control__button:hover {
+  background: #f8fbff;
+  color: #2f6bff;
+}
+
+.norio-office-rich-block-side-control__button--drag {
+  cursor: grab;
+}
+
+.norio-office-rich-block-side-control__button--drag:active {
+  cursor: grabbing;
+}
+
+.norio-office-rich-block-side-control__button--empty {
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(209, 216, 228, 0.9);
+  background: rgba(255, 255, 255, 0.96);
+  font-weight: 400;
+  line-height: 1;
+  color: #475569;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.norio-office-rich-block-side-control__button--empty:hover {
+  border-color: rgba(65, 116, 255, 0.4);
+  box-shadow: 0 10px 24px rgba(47, 107, 255, 0.16);
+}
+
+.norio-office-rich-block-side-menu,
+.norio-office-rich-block-side-submenu {
+  position: absolute;
+  z-index: 46;
+  box-sizing: border-box;
+  width: 246px;
+  max-height: min(510px, calc(100vh - 16px));
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid rgba(213, 220, 232, 0.95);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.98);
+  color: #1f2937;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.14);
+}
+
+.norio-office-rich-block-side-menu {
+  max-height: none;
+  overflow: visible;
+}
+
+.norio-office-rich-block-side-submenu {
+  z-index: 47;
+  max-height: min(680px, calc(100vh - 16px));
+}
+
+.norio-office-rich-block-side-submenu--properties {
+  overflow: visible;
+}
+
+.norio-office-rich-block-side-submenu--color {
+  padding: 10px 0 0;
+}
+
+.norio-office-rich-block-side-submenu--tertiary {
+  z-index: 48;
+}
+
+.norio-office-rich-block-colors__section + .norio-office-rich-block-colors__section {
+  margin-top: 10px;
+}
+
+.norio-office-rich-block-colors__label {
+  margin-bottom: 6px;
+  color: #4b5563;
+  font-size: 12px;
+}
+
+.norio-office-rich-block-colors__grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.norio-office-rich-block-colors__swatch {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #e6ebf3;
+  border-radius: 0;
+  background: #ffffff;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.norio-office-rich-block-colors__swatch--active,
+.norio-office-rich-block-colors__swatch:hover,
+.norio-office-rich-block-colors__swatch:focus-visible {
+  outline: 2px solid #2f6bff;
+  outline-offset: -1px;
+}
+
+.norio-office-rich-block-colors__swatch--clear::before {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #2f6bff;
+  transform: rotate(-45deg);
+  content: '';
+}
+
+.norio-office-rich-block-colors__custom {
+  margin-top: 4px;
+  min-height: 30px;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.norio-office-rich-block-colors__reset {
+  margin-top: 8px;
+}
+
+.norio-office-rich-block-colors__palette-back {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.norio-office-rich-block-side-menu__item.norio-office-rich-divider-style-option {
+  grid-template-columns: minmax(0, 1fr) 16px;
+}
+
+.norio-office-rich-divider-style-option__preview {
+  width: 100%;
+  height: 0;
+  border-top: 2px solid currentColor;
+}
+
+.norio-office-rich-block-side-menu__section + .norio-office-rich-block-side-menu__section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eef2f7;
+}
+
+.norio-office-rich-block-side-menu__section--grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.norio-office-rich-block-side-menu__title {
+  padding: 2px 4px 8px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.norio-office-rich-block-side-menu__quick {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.norio-office-rich-block-side-menu__quick-button {
+  min-width: 0;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #263142;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-block-side-menu__quick-button:hover,
+.norio-office-rich-block-side-menu__quick-button--active {
+  border-color: #dbe7ff;
+  background: #eef5ff;
+  color: #2f6bff;
+}
+
+.norio-office-rich-block-side-menu__item,
+.norio-office-rich-block-side-menu__back {
+  width: 100%;
+  min-height: 38px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #273142;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-block-side-menu__back {
+  grid-template-columns: 18px 1fr;
+  margin-bottom: 6px;
+  color: #64748b;
+}
+
+.norio-office-rich-block-side-menu__item:hover,
+.norio-office-rich-block-side-menu__back:hover,
+.norio-office-rich-block-side-menu__item--active {
+  background: #f2f7ff;
+  color: #2f6bff;
+}
+
+.norio-office-rich-block-side-menu__item--strong {
+  margin-top: 8px;
+  border-top: 1px solid #eef2f7;
+  border-radius: 0;
+}
+
+.norio-office-rich-block-side-menu__item:disabled {
+  color: #aab3c2;
+  cursor: not-allowed;
+}
+
+.norio-office-rich-block-side-menu__item:disabled:hover {
+  background: transparent;
+}
+
+.norio-office-rich-block-side-color-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 24px);
+  gap: 8px;
+  padding: 0 4px 2px;
+}
+
+.norio-office-rich-block-side-color-grid__swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(203, 213, 225, 0.82);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+}
+
+.norio-office-rich-block-side-color-grid__swatch:hover {
+  border-color: #2f6bff;
+  box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.14);
+}
+
+.norio-office-rich-block-drag-ghost {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0.72;
+  transform: rotate(0.2deg);
+  filter: drop-shadow(0 22px 36px rgba(15, 23, 42, 0.18));
+  overflow: hidden;
+}
+
+.norio-office-rich-block-drag-ghost__content {
+  width: var(--norio-office-rich-block-drag-ghost-source-width);
+  min-height: var(--norio-office-rich-block-drag-ghost-source-height);
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.86);
+  transform: scale(var(--norio-office-rich-block-drag-ghost-scale));
+  transform-origin: left top;
+}
+
+.norio-office-rich-block-drag-ghost__content.norio-office-rich-prosemirror {
+  min-height: 0;
+  padding: 0;
+}
+
+.norio-office-rich-block-drag-ghost__content .tableWrapper,
+.norio-office-rich-block-drag-ghost__content table {
+  width: 100% !important;
+}
+
+.norio-office-rich-block-drag-ghost__content > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.norio-office-rich-block-drag-ghost :is(.norio-office-rich-image-block__toolbar, .norio-office-rich-video-block__toolbar, .norio-office-rich-link-block__toolbar, .norio-office-rich-image-block__handle, .norio-office-rich-video-block__handle, .norio-office-rich-link-block__handle, .norio-office-rich-image-block__bottom-bar, .norio-office-rich-video-block__bottom-bar, .norio-office-rich-link-block__bottom-bar) {
+  display: none !important;
+}
+
+.collaboration-carets__caret {
+  position: relative;
+  margin-left: -1px;
+  margin-right: -1px;
+  border-left: 2px solid #3b82f6;
+  border-right: none;
+  pointer-events: none;
+  word-break: normal;
+}
+
+.collaboration-carets__label {
+  position: absolute;
+  top: -1.35em;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  max-width: 160px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+}
+
+.collaboration-carets__selection {
+  transition: background-color 120ms ease;
+}
+
+.norio-office-rich-prosemirror {
+  min-height: var(--norio-office-rich-page-height);
+  padding: 52px 98px 76px;
+  outline: none;
+  line-height: 1.82;
+  font-size: 15px;
+  color: #16213a;
+}
+
+.norio-office-rich-prosemirror p {
+  margin: 0 0 0.15em;
+}
+
+.norio-office-rich-prosemirror p:last-child {
+  margin-bottom: 0;
+}
+
+.norio-office-rich-prosemirror h1,
+.norio-office-rich-prosemirror h2,
+.norio-office-rich-prosemirror h3 {
+  margin: 1.15em 0 0.55em;
+  line-height: 1.35;
+  font-weight: 750;
+  color: #0f1b33;
+}
+
+.norio-office-rich-prosemirror h1 {
+  margin: 0 0 0.42em;
+  font-size: 34px;
+  line-height: 1.24;
+  font-weight: 760;
+  color: #0f1b33;
+}
+
+.norio-office-rich-prosemirror h2 {
+  font-size: 24px;
+}
+
+.norio-office-rich-prosemirror h3 {
+  font-size: 18px;
+}
+
+.norio-office-rich-prosemirror h4,
+.norio-office-rich-prosemirror h5,
+.norio-office-rich-prosemirror h6 {
+  margin: 1em 0 0.45em;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #0f1b33;
+}
+
+.norio-office-rich-prosemirror h4 {
+  font-size: 17px;
+}
+
+.norio-office-rich-prosemirror h5 {
+  font-size: 16px;
+}
+
+.norio-office-rich-prosemirror h6 {
+  font-size: 15px;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']),
+.norio-office-rich-prosemirror ol {
+  margin: 0 0 0.65em;
+  padding-left: 1.45em;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) li,
+.norio-office-rich-prosemirror ol li {
+  margin: 0.12em 0;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) li::marker,
+.norio-office-rich-prosemirror ol li::marker {
+  color: var(--norio-office-rich-selection-accent);
+}
+
+.norio-office-rich-prosemirror ol {
+  list-style-type: decimal;
+}
+
+.norio-office-rich-prosemirror ol ol {
+  list-style-type: lower-roman;
+}
+
+.norio-office-rich-prosemirror ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.norio-office-rich-prosemirror ol ol ol ol {
+  list-style-type: decimal;
+}
+
+.norio-office-rich-prosemirror ol ol ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.norio-office-rich-prosemirror ol ol ol ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.norio-office-rich-prosemirror ol ol ol ol ol ol ol {
+  list-style-type: decimal;
+}
+
+.norio-office-rich-prosemirror ol ol ol ol ol ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.norio-office-rich-prosemirror ol ol ol ol ol ol ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) {
+  list-style-type: disc;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) ul:not([data-type='taskList']) {
+  list-style-type: circle;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) {
+  list-style-type: square;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) {
+  list-style-type: disc;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) {
+  list-style-type: circle;
+}
+
+.norio-office-rich-prosemirror ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) ul:not([data-type='taskList']) {
+  list-style-type: square;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] {
+  margin: 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 4px 0;
+  border-radius: 8px;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li > label {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li > label input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li > label span {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4b5563;
+  border-radius: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li > div {
+  min-width: 0;
+  flex: 1 1 auto;
+  padding: 0 8px 0 0;
+  border-radius: 6px;
+  transition: background-color 0.16s ease;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li > div > p {
+  margin: 0;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li:hover > div,
+.norio-office-rich-prosemirror ul[data-type='taskList'] li:focus-within > div {
+  background: #f3f4f6;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li[data-checked='true'] > label span {
+  border-color: #c5ccd8;
+  background: #f3f4f6;
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li[data-checked='true'] > label span::after {
+  content: '';
+  width: 8px;
+  height: 4px;
+  border-left: 1.5px solid #9aa4b2;
+  border-bottom: 1.5px solid #9aa4b2;
+  transform: translateY(-1px) rotate(-45deg);
+}
+
+.norio-office-rich-prosemirror ul[data-type='taskList'] li[data-checked='true'] > div {
+  color: #a1a8b3;
+  text-decoration: line-through;
+  text-decoration-color: #c5ccd8;
+}
+
+.norio-office-rich-prosemirror blockquote {
+  margin: 1em 0;
+  padding: 18px 22px;
+  border-left: 4px solid var(--norio-office-rich-quote-border-color, #1677ff);
+  border-radius: 8px;
+  background: var(--norio-office-rich-quote-background-color, #fcf5ff);
+  color: #1f2937;
+}
+
+.norio-office-rich-prosemirror hr {
+  height: 0;
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #dfe5ee;
+  background: transparent;
+}
+
+.norio-office-rich-prosemirror blockquote > :first-child {
+  margin-top: 0;
+}
+
+.norio-office-rich-prosemirror blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.norio-office-rich-prosemirror blockquote p + p,
+.norio-office-rich-prosemirror blockquote ul + p,
+.norio-office-rich-prosemirror blockquote p + ul {
+  margin-top: 0.85em;
+}
+
+.norio-office-rich-prosemirror .tableWrapper {
+  margin: 0.8em 0 1.1em;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dce5 transparent;
+}
+
+.norio-office-rich-prosemirror .tableWrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.norio-office-rich-prosemirror .tableWrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.norio-office-rich-prosemirror .tableWrapper::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #d7dce5;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-prosemirror .tableWrapper::-webkit-scrollbar-thumb:hover {
+  background: #c5ccd8;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-prosemirror .tableWrapper.norio-office-rich-table-wrapper--active {
+  position: relative;
+}
+
+.norio-office-rich-prosemirror table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #ffffff;
+}
+
+.norio-office-rich-prosemirror th,
+.norio-office-rich-prosemirror td {
+  position: relative;
+  min-width: 70px;
+  height: 36px;
+  padding: 7px 12px;
+  border: 1px solid #dfe5ee;
+  vertical-align: top;
+}
+
+.norio-office-rich-prosemirror th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.norio-office-rich-prosemirror td p,
+.norio-office-rich-prosemirror th p {
+  margin: 0;
+  min-height: 22px;
+}
+
+.norio-office-rich-prosemirror table[data-table-theme='true'] > tbody > tr:first-child > :is(th, td):not([data-cell-background]) {
+  background-color: var(--norio-office-rich-table-header);
+  color: var(--norio-office-rich-table-header-text);
+  font-weight: 600;
+}
+
+.norio-office-rich-prosemirror table[data-table-theme='true'] > tbody > tr:nth-child(even) > :is(th, td):not([data-cell-background]) {
+  background-color: var(--norio-office-rich-table-odd);
+}
+
+.norio-office-rich-prosemirror table[data-table-theme='true'] > tbody > tr:nth-child(odd):not(:first-child) > :is(th, td):not([data-cell-background]) {
+  background-color: var(--norio-office-rich-table-even);
+}
+
+.norio-office-rich-prosemirror .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 107, 255, 0.08);
+  pointer-events: none;
+}
+
+.norio-office-rich-prosemirror .column-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  bottom: 0;
+  width: 4px;
+  background: #2f6bff;
+  pointer-events: none;
+}
+
+.norio-office-rich-prosemirror.resize-cursor {
+  cursor: ew-resize;
+}
+
+.norio-office-rich-table-bubble-menu,
+.norio-office-rich-countdown-bubble-menu {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.norio-office-rich-text-bubble {
+  z-index: 60;
+  max-width: calc(100vw - 16px);
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  color: #273142;
+  font: 13px/1.4 "Microsoft YaHei", "PingFang SC", sans-serif;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-text-bubble__toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.norio-office-rich-text-bubble__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: 4px;
+  height: 30px;
+  min-width: 30px;
+  padding: 4px 7px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.norio-office-rich-text-bubble__button--select {
+  max-width: 130px;
+}
+
+.norio-office-rich-text-bubble__button > span:not(.norio-office-rich-toolbar__color-trigger) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-text-bubble__button:hover,
+.norio-office-rich-text-bubble__button--active,
+.norio-office-rich-text-bubble__button:focus-visible,
+.norio-office-rich-text-bubble__option:hover,
+.norio-office-rich-text-bubble__option--active,
+.norio-office-rich-text-bubble__option:focus-visible {
+  background: #edf4ff;
+  color: #2f6bff;
+}
+
+.norio-office-rich-text-bubble__button:disabled,
+.norio-office-rich-text-bubble__option:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.norio-office-rich-text-bubble__panel {
+  z-index: 61;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+}
+
+.norio-office-rich-text-bubble__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-text-bubble__option-label {
+  flex: 1;
+}
+
+.norio-office-rich-text-bubble__option-symbol {
+  flex: 0 0 20px;
+  text-align: center;
+}
+
+.norio-office-rich-text-bubble__panel--nested {
+  z-index: 62;
+}
+
+.norio-office-rich-text-bubble__option--divider {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid #eef2f7;
+  border-radius: 0;
+}
+
+@media print {
+  .norio-office-rich-text-bubble {
+    display: none !important;
+  }
+}
+
+.norio-office-rich-table-bubble-menu {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-table-bubble-menu__toolbar {
+  display: none;
+}
+
+.norio-office-rich-table-bubble-menu > button.norio-office-rich-table-bubble-menu__button {
+  display: none;
+}
+
+.norio-office-rich-table-bubble-menu__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.norio-office-rich-table-bubble-menu__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-table-bubble-menu__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 12;
+  padding: 10px;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-table-bubble-menu__menu--palette {
+  width: 196px;
+  padding: 12px;
+}
+
+.norio-office-rich-table-bubble-menu__menu-title {
+  margin-bottom: 10px;
+  color: #374151;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.norio-office-rich-table-bubble-menu__color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.norio-office-rich-table-bubble-menu__color-swatch {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+}
+
+.norio-office-rich-table-bubble-menu__color-swatch--active {
+  box-shadow: 0 0 0 2px #2f6bff inset;
+}
+
+.norio-office-rich-table-bubble-menu__color-swatch--none::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 0;
+  background:
+    linear-gradient(135deg, transparent 46%, #d1d5db 46%, #d1d5db 54%, transparent 54%);
+}
+
+.norio-office-rich-table-bubble-menu__reset {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-table-bubble-menu__reset:hover {
+  background: #f9fafb;
+}
+
+.norio-office-rich-table-theme {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 14;
+  width: 360px;
+}
+
+.norio-office-rich-table-theme.norio-office-rich-block-side-table-theme {
+  z-index: 47;
+}
+
+.norio-office-rich-table-theme__surface {
+  box-sizing: border-box;
+  max-height: inherit;
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  color: #16213a;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+}
+
+.norio-office-rich-table-theme__palette {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1;
+  width: 264px;
+  overflow: auto;
+  padding: 10px 0 0;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+}
+
+.norio-office-rich-table-theme__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.norio-office-rich-table-theme__subtitle {
+  margin: 2px 0 12px;
+  color: #7b879d;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.norio-office-rich-table-theme__presets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.norio-office-rich-table-theme__preset {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #16213a;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  cursor: pointer;
+}
+
+.norio-office-rich-table-theme__preview {
+  box-sizing: border-box;
+  position: relative;
+  height: 40px;
+  padding: 4px;
+  border: 2px solid #dde4ee;
+  border-radius: 0;
+}
+
+.norio-office-rich-table-theme__preset:hover .norio-office-rich-table-theme__preview,
+.norio-office-rich-table-theme__preset--active .norio-office-rich-table-theme__preview,
+.norio-office-rich-table-theme__preset:focus-visible .norio-office-rich-table-theme__preview {
+  border-color: #1677ff;
+}
+
+.norio-office-rich-table-theme__preset--active {
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.norio-office-rich-table-theme .norio-office-rich-table-theme__preview table {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.norio-office-rich-table-theme .norio-office-rich-table-theme__preview td {
+  position: static;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.norio-office-rich-table-theme__selected {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.norio-office-rich-table-theme__custom {
+  display: grid;
+  grid-template-columns: 46px repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 0;
+  border-top: 1px solid #dbe3ef;
+  border-bottom: 1px solid #dbe3ef;
+}
+
+.norio-office-rich-table-theme__custom-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.norio-office-rich-table-theme__field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.norio-office-rich-table-theme__swatch {
+  box-sizing: border-box;
+  position: relative;
+  height: 28px;
+  width: 100%;
+  padding: 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.norio-office-rich-table-theme__swatch:focus-within {
+  outline: 2px solid #1677ff;
+  outline-offset: 2px;
+}
+
+.norio-office-rich-table-theme__clear {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 28px;
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #7b879d;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-table-theme__clear:hover {
+  color: #dc2626;
+}
+
+.norio-office-rich-table-bubble-menu__button {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-table-bubble-menu__button:hover,
+.norio-office-rich-table-bubble-menu__button--active {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-table-bubble-menu__button:disabled {
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.norio-office-rich-table-bubble-menu__button--select {
+  width: auto;
+  gap: 4px;
+  padding: 0 8px;
+}
+
+.norio-office-rich-table-bubble-menu__button--danger {
+  color: #dc2626;
+}
+
+.norio-office-rich-table-add-row {
+  display: none;
+}
+
+.norio-office-rich-table-add-row:hover {
+  display: none;
+}
+
+.norio-office-rich-table-column-track,
+.norio-office-rich-table-row-track {
+  position: absolute;
+  z-index: 7;
+}
+
+.norio-office-rich-table-column-track {
+  height: 16px;
+}
+
+.norio-office-rich-table-row-track {
+  width: 16px;
+}
+
+.norio-office-rich-table-column-track__line,
+.norio-office-rich-table-row-track__line {
+  position: absolute;
+  border-radius: 999px;
+  background: #d7deea;
+  pointer-events: none;
+}
+
+.norio-office-rich-table-column-track__line {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  transform: translateY(-50%);
+}
+
+.norio-office-rich-table-row-track__line {
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.norio-office-rich-table-column-track__segment,
+.norio-office-rich-table-row-track__segment {
+  position: absolute;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-table-column-track__segment {
+  top: 0;
+  height: 100%;
+}
+
+.norio-office-rich-table-row-track__segment {
+  left: 0;
+  width: 100%;
+}
+
+.norio-office-rich-table-column-track__segment::before,
+.norio-office-rich-table-row-track__segment::before {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  background: transparent;
+  transition: background-color 0.18s ease;
+}
+
+.norio-office-rich-table-column-track__segment::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  transform: translateY(-50%);
+}
+
+.norio-office-rich-table-row-track__segment::before {
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.norio-office-rich-table-column-track__segment:hover::before,
+.norio-office-rich-table-column-track__segment--active::before,
+.norio-office-rich-table-row-track__segment:hover::before,
+.norio-office-rich-table-row-track__segment--active::before {
+  background: #2f6bff;
+}
+
+.norio-office-rich-table-track__dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: #c8d0de;
+  box-shadow: 0 0 0 2px #f8fafc;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease,
+    width 0.18s ease,
+    height 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.norio-office-rich-table-track__dot::before,
+.norio-office-rich-table-track__dot::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  background: #ffffff;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.norio-office-rich-table-track__dot::before {
+  width: 8px;
+  height: 2px;
+}
+
+.norio-office-rich-table-track__dot::after {
+  width: 2px;
+  height: 8px;
+}
+
+.norio-office-rich-table-track__dot--column {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.norio-office-rich-table-track__dot--row {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.norio-office-rich-table-track__dot:hover,
+.norio-office-rich-table-track__dot:focus-visible {
+  width: 16px;
+  height: 16px;
+  background: #2f6bff;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 8px 18px rgba(47, 107, 255, 0.18);
+  outline: none;
+}
+
+.norio-office-rich-table-track__dot:hover::before,
+.norio-office-rich-table-track__dot:hover::after,
+.norio-office-rich-table-track__dot:focus-visible::before,
+.norio-office-rich-table-track__dot:focus-visible::after {
+  opacity: 1;
+}
+
+.norio-office-rich-table-track__dot--column:hover,
+.norio-office-rich-table-track__dot--column:focus-visible {
+  transform: translate(-50%, -50%);
+}
+
+.norio-office-rich-table-track__dot--row:hover {
+  transform: translate(-50%, -50%);
+}
+
+.norio-office-rich-table-track__dot--row:focus-visible {
+  transform: translate(-50%, -50%);
+}
+
+.norio-office-rich-columns {
+  margin: 1em 0;
+}
+
+.norio-office-rich-columns__surface {
+  position: relative;
+  padding: 14px 0;
+}
+
+.norio-office-rich-columns__content {
+  display: grid;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.norio-office-rich-columns__column {
+  min-width: 0;
+  min-height: 56px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: transparent;
+  transition: background-color 0.16s ease;
+}
+
+.norio-office-rich-columns:hover .norio-office-rich-columns__column {
+  background: #f6f7fb;
+}
+
+.norio-office-rich-columns__column > :first-child {
+  margin-top: 0;
+}
+
+.norio-office-rich-columns__column > :last-child {
+  margin-bottom: 0;
+}
+
+.norio-office-rich-columns__column p {
+  min-height: 1.5em;
+}
+
+.norio-office-rich-columns__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.norio-office-rich-columns__divider-hitbox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.norio-office-rich-columns__divider {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 50%;
+  width: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: col-resize;
+}
+
+.norio-office-rich-columns__divider::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #2f6bff;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.norio-office-rich-columns__divider--active::before,
+.norio-office-rich-columns__divider:hover::before {
+  opacity: 1;
+}
+
+.norio-office-rich-columns__add-button {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d2d9e6;
+  box-shadow: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  pointer-events: none;
+  transition:
+    top 0.18s ease,
+    width 0.16s ease,
+    height 0.16s ease,
+    border-radius 0.16s ease,
+    transform 0.18s ease,
+    background-color 0.16s ease,
+    box-shadow 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.norio-office-rich-columns__add-button > .norio-office-rich-icon {
+  color: #ffffff;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+
+.norio-office-rich-columns__add-button--active {
+  width: 32px;
+  height: 32px;
+  top: 12px;
+  border-radius: 999px;
+  background: #4c72ff;
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow:
+    0 8px 18px rgba(76, 114, 255, 0.28),
+    0 0 0 4px rgba(76, 114, 255, 0.12);
+}
+
+.norio-office-rich-columns__add-button--active > .norio-office-rich-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.norio-office-rich-columns__divider-hitbox:hover .norio-office-rich-columns__add-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.norio-office-rich-columns__add-button:hover,
+.norio-office-rich-columns__add-button:focus-visible,
+.norio-office-rich-columns__divider-hitbox:hover .norio-office-rich-columns__add-button:hover {
+  width: 32px;
+  height: 32px;
+  top: 12px;
+  border-radius: 999px;
+  background: #4c72ff;
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow:
+    0 8px 18px rgba(76, 114, 255, 0.28),
+    0 0 0 4px rgba(76, 114, 255, 0.12);
+}
+
+.norio-office-rich-columns__add-button:hover > .norio-office-rich-icon,
+.norio-office-rich-columns__add-button:focus-visible > .norio-office-rich-icon,
+.norio-office-rich-columns__divider-hitbox:hover .norio-office-rich-columns__add-button:hover > .norio-office-rich-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.norio-office-rich-columns__add-tooltip {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  padding: 10px 18px;
+  border-radius: 0;
+  background: #20242d;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(0.92);
+  pointer-events: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+
+.norio-office-rich-columns__add-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #20242d;
+  transform: translateX(-50%);
+}
+
+.norio-office-rich-columns__add-button--active .norio-office-rich-columns__add-tooltip,
+.norio-office-rich-columns__add-button:hover .norio-office-rich-columns__add-tooltip,
+.norio-office-rich-columns__add-button:focus-visible .norio-office-rich-columns__add-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.norio-office-rich-columns__add-button--active:hover {
+  background: #4368f2;
+}
+
+.norio-office-rich-code-block {
+  margin: 1em 0;
+  border: 1px solid #d8dee8;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: visible;
+}
+
+.norio-office-rich-code-block__toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e8edf4;
+  border-radius: 12px 12px 0 0;
+}
+
+.norio-office-rich-code-block__toolbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.norio-office-rich-code-block__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-code-block__toolbar-button {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-code-block__toolbar-button:hover {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-code-block__toolbar-button--language {
+  min-width: 190px;
+  justify-content: space-between;
+  border: 1px solid #2f6bff;
+  background: #ffffff;
+  color: #374151;
+}
+
+.norio-office-rich-code-block__menu,
+.norio-office-rich-code-block__settings-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 6;
+  min-width: 200px;
+  padding: 8px 0;
+  border: 1px solid #dde3ec;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-code-block__menu-scroll {
+  max-height: inherit;
+  overflow-x: hidden;
+}
+
+.norio-office-rich-code-block__menu-item,
+.norio-office-rich-code-block__setting-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-code-block__menu-item:hover,
+.norio-office-rich-code-block__menu-item--active,
+.norio-office-rich-code-block__setting-row:hover {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-code-block__settings-menu {
+  left: auto;
+  right: 0;
+  min-width: 150px;
+}
+
+.norio-office-rich-code-block__switch {
+  width: 30px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 999px;
+  background: #d1d5db;
+  transition: background-color 0.16s ease;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-code-block__switch[data-checked='true'] {
+  background: #2f6bff;
+}
+
+.norio-office-rich-code-block__switch-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  transition: transform 0.16s ease;
+}
+
+.norio-office-rich-code-block__switch[data-checked='true'] .norio-office-rich-code-block__switch-thumb {
+  transform: translateX(12px);
+}
+
+.norio-office-rich-code-block__body {
+  padding: 12px 18px 16px;
+  border-radius: 0 0 12px 12px;
+}
+
+.norio-office-rich-code-block__surface {
+  min-height: 120px;
+  margin: 0;
+  padding: 6px 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-code-block[data-fixed-height='true'] .norio-office-rich-code-block__surface {
+  max-height: 500px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dce5 transparent;
+}
+
+.norio-office-rich-code-block[data-fixed-height='true'] .norio-office-rich-code-block__surface::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.norio-office-rich-code-block[data-fixed-height='true'] .norio-office-rich-code-block__surface::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.norio-office-rich-code-block[data-fixed-height='true'] .norio-office-rich-code-block__surface::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #d7dce5;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-code-block[data-fixed-height='true'] .norio-office-rich-code-block__surface::-webkit-scrollbar-thumb:hover {
+  background: #c5ccd8;
+  background-clip: padding-box;
+}
+
+.norio-office-rich-code-block__line-numbers {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 8px 0 0;
+  border-right: 1px solid #e5e7eb;
+  color: #9ca3af;
+  font-family: 'Consolas', 'SFMono-Regular', 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  pointer-events: none;
+}
+
+.norio-office-rich-code-block__line-number {
+  min-width: 26px;
+  text-align: right;
+}
+
+.norio-office-rich-code-block__content {
+  display: block;
+  flex: 1 1 auto;
+  min-height: 1.6em;
+  padding-left: 22px;
+  font-family: 'Consolas', 'SFMono-Regular', 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre;
+  outline: none;
+  color: #1f2937;
+}
+
+.norio-office-rich-code-block__content.is-empty::before {
+  content: '' !important;
+}
+
+.norio-office-rich-code-block .is-empty::before {
+  content: none !important;
+  display: none !important;
+}
+
+.norio-office-rich-code-block__content .hljs-comment,
+.norio-office-rich-code-block__content .hljs-quote {
+  color: #94a3b8;
+}
+
+.norio-office-rich-code-block__content .hljs-keyword,
+.norio-office-rich-code-block__content .hljs-selector-tag,
+.norio-office-rich-code-block__content .hljs-literal,
+.norio-office-rich-code-block__content .hljs-type {
+  color: #7c3aed;
+}
+
+.norio-office-rich-code-block__content .hljs-string,
+.norio-office-rich-code-block__content .hljs-doctag,
+.norio-office-rich-code-block__content .hljs-regexp {
+  color: #059669;
+}
+
+.norio-office-rich-code-block__content .hljs-title,
+.norio-office-rich-code-block__content .hljs-section,
+.norio-office-rich-code-block__content .hljs-name,
+.norio-office-rich-code-block__content .hljs-attribute {
+  color: #2563eb;
+}
+
+.norio-office-rich-code-block__content .hljs-number,
+.norio-office-rich-code-block__content .hljs-symbol,
+.norio-office-rich-code-block__content .hljs-bullet {
+  color: #ea580c;
+}
+
+.norio-office-rich-code-block__content .hljs-variable,
+.norio-office-rich-code-block__content .hljs-template-variable,
+.norio-office-rich-code-block__content .hljs-link {
+  color: #dc2626;
+}
+
+.norio-office-rich-code-block__content .hljs-built_in,
+.norio-office-rich-code-block__content .hljs-function {
+  color: #0f766e;
+}
+
+.norio-office-rich-code-block__content .hljs-emphasis {
+  font-style: italic;
+}
+
+.norio-office-rich-code-block__content .hljs-strong {
+  font-weight: 600;
+}
+
+.norio-office-rich-code-block[data-wrap-lines='true'] .norio-office-rich-code-block__content {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] {
+  border-color: #1f2937;
+  background: #0f172a;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__toolbar {
+  border-bottom-color: rgba(148, 163, 184, 0.18);
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__toolbar-button {
+  color: #cbd5e1;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__toolbar-button:hover {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__toolbar-button--language {
+  border-color: #475569;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__body {
+  background: #0f172a;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__surface {
+  background: transparent;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content {
+  color: #e5e7eb;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__line-numbers {
+  border-right-color: #334155;
+  color: #64748b;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-comment,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-quote {
+  color: #64748b;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-keyword,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-selector-tag,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-literal,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-type {
+  color: #c084fc;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-string,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-doctag,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-regexp {
+  color: #34d399;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-title,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-section,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-name,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-attribute {
+  color: #60a5fa;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-number,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-symbol,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-bullet {
+  color: #fb923c;
+}
+
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-variable,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-template-variable,
+.norio-office-rich-code-block[data-dark-theme='true'] .norio-office-rich-code-block__content .hljs-link {
+  color: #f87171;
+}
+
+.norio-office-rich-highlight-block {
+  margin: 1.05em 0 1.2em;
+  overflow: visible;
+}
+
+.norio-office-rich-highlight-block__body {
+  padding: 0;
+}
+
+.norio-office-rich-highlight-block__surface {
+  position: relative;
+  min-height: 58px;
+  border: 1px solid #cfe0ff;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f9fcff, #f4f9ff);
+  box-shadow: none;
+}
+
+.norio-office-rich-highlight-block__emoji-slot {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.norio-office-rich-highlight-block__emoji {
+  line-height: 1;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.norio-office-rich-highlight-block__emoji-placeholder {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-highlight-block__content {
+  min-width: 0;
+  padding: 16px 28px 16px 66px;
+  color: #16213a;
+}
+
+.norio-office-rich-highlight-block[data-emoji-enabled='false'] .norio-office-rich-highlight-block__content {
+  padding-left: 28px;
+}
+
+.norio-office-rich-highlight-block__content > p {
+  min-height: 1.7em;
+}
+
+.norio-office-rich-highlight-block__content > :first-child {
+  margin-top: 0;
+}
+
+.norio-office-rich-highlight-block__content > :last-child {
+  margin-bottom: 0;
+}
+
+
+.norio-office-rich-countdown-bubble-menu {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px;
+  border: 1px solid #d8dee8;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-countdown-bubble-menu__toolbar {
+  display: inline-flex;
+  align-items: center;
+}
+
+.norio-office-rich-countdown-bubble-menu__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-countdown-bubble-menu__divider {
+  width: 1px;
+  align-self: stretch;
+  background: #e5e7eb;
+}
+
+.norio-office-rich-countdown-bubble-menu__button {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-bubble-menu__button:hover,
+.norio-office-rich-countdown-bubble-menu__button--active,
+.norio-office-rich-countdown-bubble-menu__button:focus-visible {
+  background: transparent;
+  box-shadow: inset 0 0 0 999px rgba(15, 23, 42, 0.04);
+}
+
+.norio-office-rich-countdown-bubble-menu__button--edit {
+  border-radius: 0;
+}
+
+.norio-office-rich-countdown-bubble-menu__button--edit > span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.norio-office-rich-countdown-bubble-menu__button--danger {
+  width: 30px;
+  padding: 0;
+  border-radius: 0;
+}
+
+.norio-office-rich-countdown-bubble-menu__panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 22;
+  width: 420px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+}
+
+.norio-office-rich-countdown-bubble-menu__panel .norio-office-rich-countdown-settings {
+  min-height: auto;
+}
+
+.norio-office-rich-image-block {
+  position: relative;
+  margin: 1em 0;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-image-block[data-align='left'] {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.norio-office-rich-image-block[data-align='center'] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.norio-office-rich-image-block[data-align='right'] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.norio-office-rich-image-block--selected {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6 inset;
+}
+
+.norio-office-rich-image-block__toolbar {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-image-block__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-image-block__tool {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-image-block__tool:hover {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-image-block__dropdown > .norio-office-rich-image-block__tool:hover,
+.norio-office-rich-image-block__dropdown > .norio-office-rich-image-block__tool:focus-visible {
+  background: transparent;
+}
+
+.norio-office-rich-image-block__align-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 4;
+  min-width: 132px;
+  padding: 6px 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-image-block__align-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16px 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-image-block__align-item:hover,
+.norio-office-rich-image-block__align-item--active {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-image-block__align-check {
+  width: 16px;
+  height: 16px;
+}
+
+.norio-office-rich-image-block__align-icon {
+  flex-shrink: 0;
+}
+
+.norio-office-rich-image-block__align-item > span:last-child {
+  white-space: nowrap;
+}
+
+.norio-office-rich-image-block__body {
+  padding: 8px;
+}
+
+.norio-office-rich-image-block__grid {
+  display: grid;
+  gap: 8px;
+}
+
+.norio-office-rich-image-block__item,
+.norio-office-rich-image-block__placeholder {
+  min-height: 146px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.norio-office-rich-image-block__item {
+  cursor: move;
+  position: relative;
+  justify-content: flex-start;
+}
+
+.norio-office-rich-image-block__item--selected {
+  border-color: #3b82f6;
+}
+
+.norio-office-rich-image-block__item--uploading {
+  cursor: default;
+}
+
+.norio-office-rich-image-block__item--upload-error {
+  border-color: #fecaca;
+}
+
+.norio-office-rich-image-block__image {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+}
+
+.norio-office-rich-image-block__image-stage {
+  min-height: 0;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.norio-office-rich-image-block__image-link {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.norio-office-rich-image-block__caption {
+  flex: 0 0 auto;
+  padding: 8px 12px 10px;
+  background: #ffffff;
+}
+
+.norio-office-rich-image-block__caption-desc {
+  max-width: 100%;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.norio-office-rich-editor[data-presentation='true'] .norio-office-rich-image-block__caption-desc {
+  display: block;
+}
+
+.norio-office-rich-image-block__caption-input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 24px;
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: #6b7280;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  resize: none;
+  overflow: hidden;
+  cursor: text;
+}
+
+.norio-office-rich-image-block__caption-input::placeholder {
+  color: #9ca3af;
+}
+
+.norio-office-rich-image-block__caption-input:focus {
+  outline: none;
+  border-color: #93c5fd;
+  background: #f8fbff;
+}
+
+.norio-office-rich-image-block__placeholder {
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 16px;
+  background: #fafafa;
+  cursor: default;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-image-block__placeholder-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.norio-office-rich-image-block__placeholder-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.norio-office-rich-image-block__placeholder-button {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 1px solid #d7deea;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-image-block__placeholder-button:hover {
+  background: #f8fbff;
+}
+
+.norio-office-rich-image-block__upload-state {
+  min-height: 100%;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  color: #4b5563;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-image-block__upload-state--error {
+  color: #991b1b;
+}
+
+.norio-office-rich-image-block__upload-title {
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.norio-office-rich-image-block__upload-file {
+  max-width: 100%;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.norio-office-rich-image-block__upload-state--error .norio-office-rich-image-block__upload-file {
+  color: #b91c1c;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.norio-office-rich-image-block__handle {
+  position: absolute;
+  z-index: 5;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: #3b82f6;
+  box-sizing: border-box;
+  cursor: nwse-resize;
+}
+
+.norio-office-rich-image-block__handle--tl {
+  top: -6px;
+  left: -6px;
+}
+
+.norio-office-rich-image-block__handle--tr {
+  top: -6px;
+  right: -6px;
+  cursor: nesw-resize;
+}
+
+.norio-office-rich-image-block__handle--bl {
+  bottom: -6px;
+  left: -6px;
+  cursor: nesw-resize;
+}
+
+.norio-office-rich-image-block__handle--br {
+  right: -6px;
+  bottom: -6px;
+}
+
+.norio-office-rich-image-block__bottom-bar {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: -8px;
+  width: 58px;
+  height: 8px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #c0c7d1;
+  cursor: ns-resize;
+}
+
+.norio-office-rich-image-block__viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 2600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 84px;
+  background: rgba(15, 23, 42, 0.82);
+}
+
+.norio-office-rich-image-block__viewer-stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-image-block__viewer-image {
+  max-width: 100%;
+  max-height: calc(100vh - 160px);
+  display: block;
+  object-fit: contain;
+}
+
+.norio-office-rich-image-block__viewer-meta {
+  margin-top: 18px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.norio-office-rich-image-block__viewer-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.norio-office-rich-image-block__viewer-desc {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+}
+
+.norio-office-rich-image-block__viewer-count {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+}
+
+.norio-office-rich-image-block__viewer-nav,
+.norio-office-rich-image-block__viewer-close {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.38);
+  cursor: pointer;
+}
+
+.norio-office-rich-image-block__viewer-nav {
+  transform: translateY(-50%);
+}
+
+.norio-office-rich-image-block__viewer-nav--prev {
+  left: 22px;
+}
+
+.norio-office-rich-image-block__viewer-nav--next {
+  right: 22px;
+}
+
+.norio-office-rich-image-block__viewer-close {
+  top: 18px;
+  right: 18px;
+}
+
+.norio-office-rich-image-block__link-popover {
+  position: fixed;
+  z-index: 2610;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid #dbe2ea;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+  color: #1f2937;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.norio-office-rich-image-block__link-target {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.norio-office-rich-image-block__link-target input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #1677ff;
+}
+
+.norio-office-rich-image-block__link-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 0;
+  color: #111827;
+  font-size: 14px;
+}
+
+.norio-office-rich-image-block__link-input:focus {
+  outline: 2px solid #bfdbfe;
+  outline-offset: 1px;
+  border-color: #1677ff;
+}
+
+.norio-office-rich-image-block__link-error {
+  margin: 8px 0 0;
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.norio-office-rich-image-block__link-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.norio-office-rich-image-block__link-actions button {
+  min-width: 60px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 0;
+  background: #ffffff;
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-image-block__link-actions button:hover {
+  background: #f1f5f9;
+}
+
+.norio-office-rich-image-block__link-actions .norio-office-rich-image-block__link-confirm {
+  border-color: #1677ff;
+  background: #1677ff;
+  color: #ffffff;
+}
+
+.norio-office-rich-image-block__link-actions .norio-office-rich-image-block__link-confirm:hover {
+  background: #0966e8;
+}
+
+.norio-office-rich-video-block {
+  position: relative;
+  margin: 1em 0;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-video-block[data-align='left'] {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.norio-office-rich-video-block[data-align='center'] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.norio-office-rich-video-block[data-align='right'] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.norio-office-rich-video-block--selected {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6 inset;
+}
+
+.norio-office-rich-video-block__toolbar {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-video-block__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-video-block__tool {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-video-block__tool:hover {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-video-block__tool:disabled,
+.norio-office-rich-video-block__tool:disabled:hover {
+  background: transparent;
+  opacity: 0.45;
+  cursor: default;
+}
+
+.norio-office-rich-video-block__dropdown > .norio-office-rich-video-block__tool:hover,
+.norio-office-rich-video-block__dropdown > .norio-office-rich-video-block__tool:focus-visible {
+  background: transparent;
+}
+
+.norio-office-rich-video-block__align-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 4;
+  min-width: 132px;
+  padding: 6px 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-video-block__align-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16px 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-video-block__align-item:hover,
+.norio-office-rich-video-block__align-item--active {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-video-block__align-check {
+  width: 16px;
+  height: 16px;
+}
+
+.norio-office-rich-video-block__align-icon {
+  flex-shrink: 0;
+}
+
+.norio-office-rich-video-block__align-item > span:last-child {
+  white-space: nowrap;
+}
+
+.norio-office-rich-video-block__body {
+  position: relative;
+  padding: 8px;
+}
+
+.norio-office-rich-video-block__placeholder {
+  min-height: 220px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.norio-office-rich-video-block__player {
+  min-height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.norio-office-rich-video-block__player + .plyr,
+.norio-office-rich-video-block .plyr {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.norio-office-rich-video-block .plyr--video {
+  background: #0f172a;
+}
+
+.norio-office-rich-video-block__player {
+  width: 100%;
+  display: block;
+}
+
+.norio-office-rich-video-block__caption {
+  padding: 8px 12px 10px;
+  background: #ffffff;
+}
+
+.norio-office-rich-video-block__caption-desc {
+  max-width: 100%;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  word-break: break-word;
+}
+
+.norio-office-rich-video-block__placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-video-block__placeholder-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.norio-office-rich-video-block__placeholder-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.norio-office-rich-video-block__placeholder-button {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 1px solid #d7deea;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-video-block__placeholder-button:hover {
+  background: #f8fbff;
+}
+
+.norio-office-rich-video-block__upload-overlay {
+  position: absolute;
+  inset: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.58);
+  color: #ffffff;
+}
+
+.norio-office-rich-video-block__upload-state {
+  min-height: 100%;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  color: #4b5563;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-video-block__upload-overlay .norio-office-rich-video-block__upload-state {
+  min-height: auto;
+  color: #ffffff;
+}
+
+.norio-office-rich-video-block__upload-state--error {
+  color: #991b1b;
+}
+
+.norio-office-rich-video-block__upload-title {
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.norio-office-rich-video-block__upload-overlay .norio-office-rich-video-block__upload-title {
+  color: #ffffff;
+}
+
+.norio-office-rich-video-block__upload-file {
+  max-width: min(320px, 100%);
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.norio-office-rich-video-block__upload-overlay .norio-office-rich-video-block__upload-file {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.norio-office-rich-video-block__upload-state--error .norio-office-rich-video-block__upload-file {
+  color: #b91c1c;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.norio-office-rich-video-block__upload-overlay .norio-office-rich-video-block__upload-state--error .norio-office-rich-video-block__upload-file {
+  color: #fecaca;
+}
+
+.norio-office-rich-video-block__handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: #3b82f6;
+  box-sizing: border-box;
+  cursor: nwse-resize;
+}
+
+.norio-office-rich-video-block__handle--tl {
+  top: -6px;
+  left: -6px;
+}
+
+.norio-office-rich-video-block__handle--tr {
+  top: -6px;
+  right: -6px;
+  cursor: nesw-resize;
+}
+
+.norio-office-rich-video-block__handle--bl {
+  bottom: -6px;
+  left: -6px;
+  cursor: nesw-resize;
+}
+
+.norio-office-rich-video-block__handle--br {
+  right: -6px;
+  bottom: -6px;
+}
+
+.norio-office-rich-video-block__bottom-bar {
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 58px;
+  height: 8px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #c0c7d1;
+  cursor: ns-resize;
+}
+
+.norio-office-rich-video-block__dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 31;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 88px;
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-video-block__dialog-card {
+  width: min(620px, calc(100vw - 32px));
+  padding: 18px 22px 16px;
+  border: 1px solid #dbe2ea;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-video-block__dialog-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.norio-office-rich-video-block__dialog-label {
+  color: #111827;
+  font-size: 14px;
+}
+
+.norio-office-rich-video-block__dialog-input {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #3b82f6;
+  border-radius: 0;
+  outline: none;
+  color: #111827;
+  font-size: 14px;
+}
+
+.norio-office-rich-video-block__dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.norio-office-rich-video-block__dialog-confirm {
+  min-width: 72px;
+  height: 32px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 0;
+  background: #c7d2fe;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-video-block__dialog-confirm:hover {
+  background: #a5b4fc;
+}
+
+.norio-office-rich-countdown-block {
+  margin: 1em 0;
+  border: 1px solid #d9dee7;
+  border-radius: 6px;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-countdown-block--selected {
+  border-color: #c7d6ff;
+}
+
+.norio-office-rich-countdown-block__inner {
+  position: relative;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 56px 16px;
+}
+
+.norio-office-rich-countdown-block__actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.norio-office-rich-countdown-block__tool {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-block__tool:hover,
+.norio-office-rich-countdown-block__tool--active {
+  background: #eef3f8;
+}
+
+.norio-office-rich-countdown-block__color-control {
+  position: relative;
+}
+
+.norio-office-rich-countdown-block__digits {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+}
+
+.norio-office-rich-countdown-block__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.norio-office-rich-countdown-block__card {
+  min-width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border-radius: 4px;
+  background: var(--norio-office-rich-countdown-color, #ff8b00);
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.norio-office-rich-countdown-block__label {
+  margin-top: 8px;
+  color: var(--norio-office-rich-countdown-color, #ff8b00);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.norio-office-rich-countdown-block__separator {
+  align-self: flex-start;
+  padding-top: 11px;
+  color: var(--norio-office-rich-countdown-color, #ff8b00);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.norio-office-rich-countdown-color-panel {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  z-index: 12;
+  width: 204px;
+  padding: 12px;
+  border: 1px solid #d9dee7;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-countdown-color-panel__title {
+  margin-bottom: 8px;
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.norio-office-rich-countdown-color-panel__swatches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.norio-office-rich-countdown-color-panel__swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-color-panel__swatch--active {
+  border-color: #2f6bff;
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.norio-office-rich-countdown-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 2600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.52);
+}
+
+.norio-office-rich-countdown-dialog__panel {
+  width: min(600px, calc(100vw - 40px));
+  padding: 24px;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.norio-office-rich-countdown-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.norio-office-rich-countdown-dialog__title {
+  color: #1f2937;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.norio-office-rich-countdown-dialog__close {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-dialog__close:hover {
+  background: #f3f4f6;
+}
+
+.norio-office-rich-countdown-dialog__option {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px 16px;
+  border: 1px solid #d9dee7;
+  border-radius: 0;
+}
+
+.norio-office-rich-countdown-dialog__option + .norio-office-rich-countdown-dialog__option {
+  margin-top: 16px;
+}
+
+.norio-office-rich-countdown-dialog__option--active {
+  border-color: #2f6bff;
+}
+
+.norio-office-rich-countdown-dialog__radio {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  grid-row: span 2;
+  margin-top: 1px;
+}
+
+.norio-office-rich-countdown-dialog__radio input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-dialog__radio span {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  border: 1px solid #b8c0cc;
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-countdown-dialog__radio input:checked + span {
+  border: 5px solid #4c72ff;
+}
+
+.norio-office-rich-countdown-dialog__option-title {
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.norio-office-rich-countdown-dialog__duration {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.norio-office-rich-countdown-dialog__duration input {
+  width: 50px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #d9dee7;
+  border-radius: 0;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.norio-office-rich-countdown-dialog__date-picker {
+  position: relative;
+  width: 278px;
+  max-width: 100%;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 12px;
+  padding: 0 8px;
+  border: 1px solid #d9dee7;
+  border-radius: 0;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-countdown-dialog__date-button,
+.norio-office-rich-countdown-dialog__time-button {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1f2937;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-dialog__date-button {
+  width: 104px;
+}
+
+.norio-office-rich-countdown-dialog__time-button {
+  width: 62px;
+}
+
+.norio-office-rich-countdown-dialog__date-button:hover,
+.norio-office-rich-countdown-dialog__time-button:hover {
+  background: #f3f7ff;
+  color: #2f6bff;
+}
+
+.norio-office-rich-countdown-dialog__date-button:disabled,
+.norio-office-rich-countdown-dialog__time-button:disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.norio-office-rich-countdown-dialog__date-picker > .norio-office-rich-icon {
+  margin-left: auto;
+}
+
+.norio-office-rich-countdown-date-picker,
+.norio-office-rich-countdown-time-picker {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 2700;
+  border: 1px solid #e3e8f0;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow:
+    0 18px 44px rgba(15, 23, 42, 0.16),
+    0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.norio-office-rich-countdown-date-picker {
+  width: 292px;
+  padding: 14px 14px 0;
+}
+
+.norio-office-rich-countdown-date-picker__header {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 8px;
+}
+
+.norio-office-rich-countdown-date-picker__title {
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.norio-office-rich-countdown-date-picker__nav {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-date-picker__nav:hover {
+  background: #f3f7ff;
+}
+
+.norio-office-rich-countdown-date-picker__weekdays,
+.norio-office-rich-countdown-date-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.norio-office-rich-countdown-date-picker__weekdays {
+  margin-top: 12px;
+  color: #8a95a5;
+  font-size: 12px;
+  text-align: center;
+}
+
+.norio-office-rich-countdown-date-picker__weekdays span {
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-countdown-date-picker__grid {
+  margin-top: 4px;
+}
+
+.norio-office-rich-countdown-date-picker__day {
+  width: 32px;
+  height: 32px;
+  justify-self: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1f2937;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-date-picker__day:hover {
+  background: #edf4ff;
+  color: #2f6bff;
+}
+
+.norio-office-rich-countdown-date-picker__day--muted {
+  color: #b7c0cc;
+}
+
+.norio-office-rich-countdown-date-picker__day--today {
+  color: #2f6bff;
+  font-weight: 700;
+}
+
+.norio-office-rich-countdown-date-picker__day--selected {
+  background: #2f6bff;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.norio-office-rich-countdown-date-picker__day--selected:hover {
+  background: #2f6bff;
+  color: #ffffff;
+}
+
+.norio-office-rich-countdown-date-picker__today {
+  width: calc(100% + 28px);
+  height: 48px;
+  margin: 12px -14px 0;
+  border: 0;
+  border-top: 1px solid #edf1f6;
+  border-radius: 0;
+  background: #ffffff;
+  color: #2f6bff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-date-picker__today:hover {
+  background: #f7fbff;
+}
+
+.norio-office-rich-countdown-time-picker {
+  width: 144px;
+  height: 248px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.norio-office-rich-countdown-time-picker__column {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dce5 transparent;
+}
+
+.norio-office-rich-countdown-time-picker__column + .norio-office-rich-countdown-time-picker__column {
+  border-left: 1px solid #edf1f6;
+}
+
+.norio-office-rich-countdown-time-picker__item {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: #1f2937;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-time-picker__item:hover {
+  background: #f3f7ff;
+}
+
+.norio-office-rich-countdown-time-picker__item--active {
+  color: #2f6bff;
+  font-weight: 700;
+  background: #eef5ff;
+}
+
+.norio-office-rich-countdown-dialog__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.norio-office-rich-countdown-dialog__checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.norio-office-rich-countdown-dialog__checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: #4c72ff;
+}
+
+.norio-office-rich-countdown-dialog__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.norio-office-rich-countdown-dialog__button {
+  min-width: 62px;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-countdown-dialog__button--secondary {
+  border: 1px solid #cbd3df;
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.norio-office-rich-countdown-dialog__button--primary {
+  border: 0;
+  background: #3f6fff;
+  color: #ffffff;
+}
+
+.norio-office-rich-link-block {
+  position: relative;
+  margin: 1em 0;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-link-block[data-align='left'] {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.norio-office-rich-link-block[data-align='center'] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.norio-office-rich-link-block[data-align='right'] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.norio-office-rich-link-block--selected {
+  border-color: #d7deea;
+}
+
+.norio-office-rich-link-block__toolbar {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-link-block__tool {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-link-block__tool:hover,
+.norio-office-rich-link-block__tool--active {
+  background: #eef4ff;
+}
+
+.norio-office-rich-link-block__divider {
+  width: 1px;
+  height: 20px;
+  background: #e5e7eb;
+}
+
+.norio-office-rich-link-block__dropdown {
+  position: relative;
+}
+
+.norio-office-rich-link-block__align-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 4;
+  min-width: 132px;
+  padding: 6px 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-link-block__align-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16px 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-link-block__align-item:hover,
+.norio-office-rich-link-block__align-item--active {
+  background: #f5f7fb;
+}
+
+.norio-office-rich-link-block__align-check {
+  width: 16px;
+  height: 16px;
+}
+
+.norio-office-rich-link-block__align-icon {
+  flex-shrink: 0;
+}
+
+.norio-office-rich-link-block__align-item > span:last-child {
+  white-space: nowrap;
+}
+
+.norio-office-rich-link-block__form-card {
+  display: grid;
+  width: 470px;
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr) 96px;
+  gap: 10px 14px;
+  align-items: end;
+  padding: 14px 18px;
+  border: 1px solid #dbe2ea;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+  box-sizing: border-box;
+}
+
+.norio-office-rich-link-block__form-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.norio-office-rich-link-block__form-label {
+  color: #111827;
+  font-size: 14px;
+}
+
+.norio-office-rich-link-block__form-input {
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid #d7deea;
+  border-radius: 10px;
+  outline: none;
+  color: #111827;
+  font-size: 14px;
+}
+
+.norio-office-rich-link-block__form-input:focus {
+  border-color: #4c72ff;
+}
+
+.norio-office-rich-link-block__form-actions {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+}
+
+.norio-office-rich-link-block__form-confirm {
+  width: 96px;
+  height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: #c9ced6;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-link-block__form-confirm:disabled {
+  cursor: not-allowed;
+}
+
+.norio-office-rich-link-block__form-confirm:not(:disabled) {
+  background: #4c72ff;
+}
+
+.norio-office-rich-link-block__preview {
+  overflow: hidden;
+  border: 1px solid #dbe2ea;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.norio-office-rich-link-block__iframe {
+  width: 100%;
+  border: 0;
+  display: block;
+  background: #ffffff;
+}
+
+.norio-office-rich-link-block__preview-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 20px;
+  border-top: 1px solid #eef2f7;
+}
+
+.norio-office-rich-link-block__preview-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.norio-office-rich-link-block__preview-title {
+  min-width: 0;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-link-block__preview-open {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.norio-office-rich-link-block__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 400px;
+  max-width: 100%;
+  height: 65px;
+  padding: 10px 18px;
+  border: 1px solid #dbe2ea;
+  border-radius: 14px;
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-link-block__card-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.norio-office-rich-link-block__card-text {
+  min-width: 0;
+}
+
+.norio-office-rich-link-block__card-title {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-link-block__card-subtitle {
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-link-block__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #eef4ff;
+  color: #2f6bff;
+  text-decoration: none;
+}
+
+.norio-office-rich-link-block__text > span {
+  white-space: nowrap;
+}
+
+.norio-office-rich-link-block__handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: #3b82f6;
+  box-sizing: border-box;
+  cursor: nwse-resize;
+}
+
+.norio-office-rich-link-block__handle--tl {
+  top: -6px;
+  left: -6px;
+}
+
+.norio-office-rich-link-block__handle--tr {
+  top: -6px;
+  right: -6px;
+  cursor: nesw-resize;
+}
+
+.norio-office-rich-link-block__handle--bl {
+  bottom: -6px;
+  left: -6px;
+  cursor: nesw-resize;
+}
+
+.norio-office-rich-link-block__handle--br {
+  right: -6px;
+  bottom: -6px;
+}
+
+.norio-office-rich-link-block__bottom-bar {
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 58px;
+  height: 8px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #c0c7d1;
+  cursor: ns-resize;
+}
+
+.norio-office-rich-link-block__dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 31;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 88px;
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.norio-office-rich-link-block__dialog-card {
+  width: min(820px, calc(100vw - 32px));
+  padding: 28px 32px;
+  border: 1px solid #dbe2ea;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+}
+
+.norio-office-rich-link-block__dialog-row {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.norio-office-rich-link-block__dialog-row + .norio-office-rich-link-block__dialog-row {
+  margin-top: 18px;
+}
+
+.norio-office-rich-link-block__dialog-label {
+  color: #111827;
+  font-size: 16px;
+}
+
+.norio-office-rich-link-block__dialog-input {
+  height: 54px;
+  padding: 0 18px;
+  border: 1px solid #d7deea;
+  border-radius: 0;
+  outline: none;
+  color: #111827;
+  font-size: 14px;
+}
+
+.norio-office-rich-link-block__dialog-input:focus {
+  border-color: #4c72ff;
+}
+
+.norio-office-rich-link-block__dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.norio-office-rich-link-block__dialog-confirm {
+  width: 140px;
+  height: 58px;
+  border: 0;
+  border-radius: 0;
+  background: #c9ced6;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-link-block__dialog-confirm:disabled {
+  cursor: not-allowed;
+}
+
+.norio-office-rich-link-block__dialog-confirm:not(:disabled) {
+  background: #4c72ff;
+}
+
+.norio-office-rich-link-block__fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.norio-office-rich-link-block__fullscreen-card {
+  width: min(1280px, calc(100vw - 48px));
+  height: min(820px, calc(100vh - 48px));
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.22);
+}
+
+.norio-office-rich-link-block__fullscreen-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.norio-office-rich-link-block__fullscreen-title {
+  min-width: 0;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-link-block__fullscreen-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.norio-office-rich-link-block__fullscreen-open {
+  color: #2f6bff;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.norio-office-rich-link-block__fullscreen-close {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-link-block__fullscreen-iframe {
+  flex: 1 1 auto;
+  width: 100%;
+  border: 0;
+  background: #ffffff;
+}
+
+.norio-office-rich-prosemirror pre {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+
+.norio-office-rich-prosemirror code {
+  padding: 0.15em 0.35em;
+  border-radius: 6px;
+  background: rgba(148, 163, 184, 0.18);
+}
+
+.norio-office-rich-prosemirror s,
+.norio-office-rich-prosemirror strike {
+  color: #666666;
+  text-decoration-color: #666666;
+}
+
+.norio-office-rich-prosemirror pre code {
+  padding: 0;
+  background: transparent;
+}
+
+.norio-office-rich-prosemirror .is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: #94a3b8;
+}
+
+.norio-office-rich-mention-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 220px;
+  height: 22px;
+  padding: 1px 5px 1px 3px;
+  border-radius: 6px;
+  color: #2563eb;
+  font-weight: 600;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  transform: translateY(-1px);
+}
+
+.norio-office-rich-mention-inline--selected {
+  box-shadow: 0 0 0 2px rgba(76, 114, 255, 0.18);
+}
+
+.norio-office-rich-mention-inline__icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #4c72ff;
+  color: #ffffff;
+  font-size: 10px;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.norio-office-rich-mention-inline__icon > span {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-mention-inline--document .norio-office-rich-mention-inline__icon {
+  background: #a678ff;
+}
+
+.norio-office-rich-mention-inline__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.norio-office-rich-mention-inline__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.norio-office-rich-mention-panel {
+  position: absolute;
+  z-index: 42;
+  width: 360px;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d9e0ea;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+}
+
+.norio-office-rich-comment-mention-panel {
+  position: fixed;
+  z-index: 2600;
+  height: 408px;
+  max-height: calc(100vh - 16px);
+}
+
+.norio-office-rich-mention-panel__tabs {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  height: 36px;
+  padding: 0 16px;
+  border-bottom: 1px solid #dde3ec;
+}
+
+.norio-office-rich-mention-panel__tab {
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #1f2937;
+  font-size: 13px;
+  line-height: 34px;
+  cursor: pointer;
+}
+
+.norio-office-rich-mention-panel__tab--active {
+  border-bottom-color: #2563eb;
+  color: #1557ff;
+  font-weight: 600;
+}
+
+.norio-office-rich-mention-panel__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.norio-office-rich-mention-panel__item {
+  width: calc(100% - 16px);
+  min-height: 48px;
+  margin: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-mention-panel__item--active,
+.norio-office-rich-mention-panel__item:hover {
+  background: #eeeeef;
+}
+
+.norio-office-rich-mention-panel__avatar {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #4c72ff;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.norio-office-rich-mention-panel__avatar > span {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-mention-panel__avatar[data-type='2'] {
+  background: #efe7ff;
+  color: #7c3cff;
+}
+
+.norio-office-rich-mention-panel__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.norio-office-rich-mention-panel__content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.norio-office-rich-mention-panel__title-row {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.norio-office-rich-mention-panel__name {
+  min-width: 0;
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.norio-office-rich-mention-panel__tag {
+  flex: 0 0 auto;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 0;
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.norio-office-rich-mention-panel__meta,
+.norio-office-rich-mention-panel__empty {
+  color: #8a94a6;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.norio-office-rich-mention-panel__empty {
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.norio-office-rich-mention-panel__footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 14px;
+  border-top: 1px solid #dde3ec;
+  background: #ffffff;
+}
+
+.norio-office-rich-mention-panel__submit {
+  min-width: 52px;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 0;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-mention-panel__submit:disabled {
+  background: #c9ced6;
+  cursor: default;
+}
+
+.norio-office-rich-editor__statusbar {
+  height: var(--norio-office-rich-statusbar-height);
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 30;
+  container: norio-rich-statusbar / inline-size;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  border-top: 1px solid var(--norio-office-rich-divider-color);
+  background: var(--norio-office-rich-statusbar-bg);
+  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.025);
+  color: var(--norio-office-rich-muted-color);
+  font-size: 13px;
+}
+
+.norio-office-rich-statusbar__side {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.norio-office-rich-statusbar__side--counts {
+  flex: 0 0 auto;
+  gap: 20px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.norio-office-rich-statusbar__side--right {
+  justify-content: flex-end;
+}
+
+.norio-office-rich-statusbar__group {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 10px;
+}
+
+.norio-office-rich-statusbar__group::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 16px;
+  background: #dce3ed;
+  transform: translateY(-50%);
+}
+
+.norio-office-rich-statusbar__group:first-child {
+  padding-left: 0;
+}
+
+.norio-office-rich-statusbar__group:first-child::before {
+  display: none;
+}
+
+.norio-office-rich-statusbar__item,
+.norio-office-rich-statusbar__button,
+.norio-office-rich-statusbar__zoom {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.norio-office-rich-statusbar__item {
+  padding: 0;
+}
+
+.norio-office-rich-statusbar__button {
+  min-width: 32px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.norio-office-rich-statusbar__button:hover:not(:disabled) {
+  background: var(--norio-office-rich-hover-bg);
+  color: #1677ff;
+}
+
+.norio-office-rich-statusbar__button:focus-visible,
+.norio-office-rich-statusbar__export-item:focus-visible {
+  outline: 2px solid #1677ff;
+  outline-offset: -2px;
+}
+
+.norio-office-rich-statusbar__button:disabled,
+.norio-office-rich-statusbar__export-item:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.norio-office-rich-statusbar__button--icon {
+  width: 28px;
+  min-width: 28px;
+  padding: 0;
+}
+
+.norio-office-rich-statusbar__button--active {
+  background: var(--norio-office-rich-active-bg);
+  color: #1d4ed8;
+}
+
+.norio-office-rich-statusbar__zoom {
+  width: 46px;
+  padding: 0;
+  justify-content: center;
+  color: #0f1b33;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.norio-office-rich-statusbar__caret {
+  transform: rotate(180deg);
+}
+
+.norio-office-rich-statusbar__caret--open {
+  transform: none;
+}
+
+.norio-office-rich-statusbar__export-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: 188px;
+  padding: 6px;
+  box-sizing: border-box;
+  border: 1px solid #d7e1ef;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.norio-office-rich-statusbar__export-menu::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid #d7e1ef;
+  border-bottom: 1px solid #d7e1ef;
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.norio-office-rich-statusbar__export-item {
+  width: 100%;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #475569;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.norio-office-rich-statusbar__export-item:hover:not(:disabled),
+.norio-office-rich-statusbar__export-item:focus-visible {
+  background: var(--norio-office-rich-active-bg);
+  color: #1677ff;
+}
+
+@container norio-rich-statusbar (max-width: 620px) {
+  .norio-office-rich-statusbar__label,
+  .norio-office-rich-statusbar__caret {
+    display: none;
+  }
+
+  .norio-office-rich-statusbar__side {
+    gap: 4px;
+  }
+
+  .norio-office-rich-statusbar__side--counts {
+    gap: 10px;
+    font-size: 11px;
+  }
+
+  .norio-office-rich-statusbar__group {
+    gap: 0;
+    padding-left: 5px;
+  }
+
+  .norio-office-rich-statusbar__group--view {
+    padding-left: 0;
+  }
+
+  .norio-office-rich-statusbar__button {
+    width: 28px;
+    min-width: 28px;
+    padding: 0;
+  }
+
+  .norio-office-rich-statusbar__zoom {
+    width: 40px;
+    font-size: 12px;
+  }
+
+  .norio-office-rich-statusbar__export-menu::after {
+    right: 9px;
+  }
+}
+
+@container norio-rich-statusbar (max-width: 360px) {
+  .norio-office-rich-statusbar__side--counts {
+    gap: 6px;
+  }
+
+  .norio-office-rich-statusbar__button {
+    width: 22px;
+    min-width: 22px;
+  }
+
+  .norio-office-rich-statusbar__zoom {
+    width: 36px;
+  }
+
+  .norio-office-rich-statusbar__group {
+    padding-left: 3px;
+  }
+
+  .norio-office-rich-statusbar__group--view {
+    padding-left: 0;
+  }
+}
+
+.norio-office-rich-upload-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 64px;
+  z-index: 45;
+  width: min(360px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.norio-office-rich-upload-panel__item {
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #dbe3ef;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+.norio-office-rich-upload-panel__item--error {
+  border-color: #fecaca;
+  background: #fffafa;
+}
+
+.norio-office-rich-upload-panel__error-dot {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.norio-office-rich-upload-panel__content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.norio-office-rich-upload-panel__title {
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.norio-office-rich-upload-panel__meta {
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.norio-office-rich-upload-panel__button {
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #bfdbfe;
+  border-radius: 0;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-upload-panel__button:hover {
+  background: #dbeafe;
+}
+
+.norio-office-rich-upload-panel__button--ghost {
+  border-color: #e5e7eb;
+  background: #ffffff;
+  color: #6b7280;
+}
+
+.norio-office-rich-upload-panel__button--ghost:hover {
+  background: #f3f4f6;
+}
+
+.norio-office-rich-editor__presentation-pointer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #ffb0b0 0%, #ff4d4f 38%, #d91f26 100%);
+  box-shadow:
+    0 0 0 3px rgba(255, 77, 79, 0.18),
+    0 0 12px rgba(217, 31, 38, 0.45),
+    0 0 22px rgba(217, 31, 38, 0.25);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.norio-office-rich-formula-block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 18px 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.norio-office-rich-formula-block--selected {
+  outline: 1.5px solid var(--norio-office-rich-selection-accent, #4c7dff);
+  outline-offset: 4px;
+}
+
+.norio-office-rich-formula-block__content {
+  min-width: 160px;
+  max-width: 100%;
+  padding: 20px 28px;
+  border: 1px solid #e6eaf0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.norio-office-rich-formula-block__content .katex-display {
+  margin: 0;
+}
+
+.norio-office-rich-formula-block__placeholder,
+.norio-office-rich-formula-block__error {
+  min-width: 160px;
+  padding: 18px 24px;
+  border: 1px dashed #cfd7e6;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
+}
+
+.norio-office-rich-formula-editor {
+  position: fixed;
+  inset: 0;
+  z-index: 2400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(15, 23, 42, 0.18);
+}
+
+.norio-office-rich-formula-editor__panel {
+  width: min(980px, 100%);
+  border: 1px solid #e6eaf0;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.16);
+}
+
+.norio-office-rich-formula-editor__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px 8px;
+}
+
+.norio-office-rich-formula-editor__title {
+  color: #111827;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.norio-office-rich-formula-editor__close {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.norio-office-rich-formula-editor__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) 360px;
+  gap: 18px;
+  padding: 8px 28px 0;
+}
+
+.norio-office-rich-formula-editor__left,
+.norio-office-rich-formula-editor__right {
+  min-width: 0;
+}
+
+.norio-office-rich-formula-editor__section-title {
+  margin-bottom: 12px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.norio-office-rich-formula-editor__textarea {
+  width: 100%;
+  min-height: 276px;
+  padding: 14px 16px;
+  border: 1px solid #e6eaf0;
+  border-radius: 0;
+  outline: none;
+  resize: none;
+  color: #1f2937;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.norio-office-rich-formula-editor__textarea:focus {
+  border-color: #4c7dff;
+  box-shadow: 0 0 0 3px rgba(76, 125, 255, 0.12);
+}
+
+.norio-office-rich-formula-editor__preview {
+  min-height: 138px;
+  margin-top: 14px;
+  padding: 18px 20px;
+  border: 1px solid #e6eaf0;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.norio-office-rich-formula-editor__preview-content {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.norio-office-rich-formula-editor__preview-content .katex-display {
+  margin: 0;
+}
+
+.norio-office-rich-formula-editor__preview-placeholder,
+.norio-office-rich-formula-editor__preview-error {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c0c6d4;
+  font-size: 15px;
+}
+
+.norio-office-rich-formula-editor__preview-error {
+  color: #ef4444;
+}
+
+.norio-office-rich-formula-editor__tabs {
+  display: flex;
+  gap: 18px;
+  padding: 0 12px 8px;
+  border: 1px solid #e6eaf0;
+  border-bottom: 0;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.norio-office-rich-formula-editor__tab {
+  padding: 14px 0 10px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #6b7280;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.norio-office-rich-formula-editor__tab--active {
+  border-bottom-color: #4c7dff;
+  color: #111827;
+  font-weight: 600;
+}
+
+.norio-office-rich-formula-editor__presets-scroll {
+  height: 486px;
+  border: 1px solid #e6eaf0;
+  border-top: 0;
+  border-radius: 0;
+}
+
+.norio-office-rich-formula-editor__presets {
+  display: grid;
+  padding: 14px;
+}
+
+.norio-office-rich-formula-editor__presets--common {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.norio-office-rich-formula-editor__presets--cards {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.norio-office-rich-formula-editor__preset {
+  padding: 0;
+  border: 1px solid #e6eaf0;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.norio-office-rich-formula-editor__preset:hover {
+  border-color: #bfd0ff;
+  background: #f5f8ff;
+}
+
+.norio-office-rich-formula-editor__preset--inline {
+  min-height: 54px;
+}
+
+.norio-office-rich-formula-editor__preset--block {
+  min-height: 82px;
+}
+
+.norio-office-rich-formula-editor__preset-preview {
+  width: 100%;
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  color: #111827;
+}
+
+.norio-office-rich-formula-editor__preset-preview .katex-display {
+  margin: 0;
+}
+
+.norio-office-rich-formula-editor__preset--inline .norio-office-rich-formula-editor__preset-preview {
+  padding: 10px 6px;
+}
+
+.norio-office-rich-formula-editor__preset--inline .norio-office-rich-formula-editor__preset-preview .katex {
+  font-size: 1.28em;
+}
+
+.norio-office-rich-formula-editor__preset--block .norio-office-rich-formula-editor__preset-preview {
+  min-height: 82px;
+  padding: 16px 18px;
+}
+
+.norio-office-rich-formula-editor__presets--cards .norio-office-rich-formula-editor__preset-preview {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.norio-office-rich-formula-editor__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 28px 26px;
+}
+
+.norio-office-rich-formula-editor__hint {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.norio-office-rich-formula-editor__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.norio-office-rich-formula-editor__button {
+  min-width: 104px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 0;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.norio-office-rich-formula-editor__button--secondary {
+  border: 1px solid #d8deea;
+  background: #ffffff;
+  color: #374151;
+}
+
+.norio-office-rich-formula-editor__button--primary {
+  border: 0;
+  background: #4c7dff;
+  color: #ffffff;
+}
+
+.norio-office-rich-formula-editor__button--primary:disabled {
+  background: #d6dbe6;
+  cursor: default;
+}
+
+.norio-office-rich-local-file-block {
+  width: min(100%, 520px);
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid #dbe3ef;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  box-sizing: border-box;
+}
+
+.norio-office-rich-local-file-block--selected {
+  border-color: #9db8ff;
+  box-shadow:
+    0 8px 20px rgba(15, 23, 42, 0.04),
+    0 0 0 3px rgba(76, 125, 255, 0.14);
+}
+
+.norio-office-rich-local-file-block--empty {
+  opacity: 0.8;
+}
+
+.norio-office-rich-local-file-block__main {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.norio-office-rich-local-file-block__icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.norio-office-rich-local-file-block__content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.norio-office-rich-local-file-block__title {
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.norio-office-rich-local-file-block__meta {
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.norio-office-rich-local-file-block__download {
+  height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.norio-office-rich-local-file-block__download:disabled {
+  border-color: #d1d5db;
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: default;
+}
+
+@media (max-width: 1080px) {
+  .norio-office-rich-editor__main {
+    padding: 8px;
+  }
+
+  .norio-office-rich-outline-shell {
+    width: min(260px, 100%);
+  }
+
+  .norio-office-rich-comment-panel {
+    flex-basis: min(286px, calc(100vw - 32px));
+    width: min(286px, calc(100vw - 32px));
+    min-width: min(286px, calc(100vw - 32px));
+  }
+
+  .norio-office-rich-editor__stage {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .norio-office-rich-prosemirror {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .norio-office-rich-editor {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .norio-office-rich-editor__toolbar {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 8px 12px;
+  }
+
+  .norio-office-rich-editor__toolbar-shell {
+    width: 100%;
+    height: 38px;
+  }
+
+  .norio-office-rich-editor__toolbar-scroll {
+    overflow: visible;
+  }
+
+  .norio-office-rich-prosemirror {
+    padding: 32px 28px 48px;
+  }
+
+  .norio-office-rich-editor__statusbar {
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .norio-office-rich-local-file-block {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .norio-office-rich-local-file-block__download {
+    width: 100%;
+  }
+
+  .norio-office-rich-editor[data-mode='preview'] .norio-office-rich-editor__stage {
+    min-width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .norio-office-rich-editor[data-mode='preview'] .norio-office-rich-editor__page {
+    width: var(--norio-office-rich-page-width);
+    transform-origin: top left;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  }
+
+  .norio-office-rich-editor[data-mode='preview'] .norio-office-rich-prosemirror {
+    padding: 18px 16px;
+  }
+}

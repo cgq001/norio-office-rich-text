@@ -1,0 +1,57 @@
+{
+  "name": "norio-office-rich-text-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "playground"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w playground",
+    "build": "npm run build -w @norio-office/rich-text",
+    "build:playground": "npm run build -w playground",
+    "build:all": "npm run build && npm run build:playground",
+    "publish:prepare": "node scripts/prepare-npm-package.mjs",
+    "publish:dry-run": "npm run publish:prepare && node scripts/publish-npm-package.mjs --dry-run",
+    "publish:npm": "npm run publish:prepare && node scripts/publish-npm-package.mjs",
+    "typecheck": "npm run typecheck -w @norio-office/rich-text && npm run typecheck -w playground",
+    "preview": "npm run preview -w playground"
+  },
+  "devDependencies": {
+    "@tiptap/core": "^3.22.1",
+    "@tiptap/extension-code-block": "^3.22.1",
+    "@tiptap/extension-code-block-lowlight": "^3.22.1",
+    "@tiptap/extension-collaboration": "^3.22.2",
+    "@tiptap/extension-collaboration-caret": "^3.22.2",
+    "@tiptap/extension-font-family": "^3.22.1",
+    "@tiptap/extension-horizontal-rule": "^3.22.1",
+    "@tiptap/extension-placeholder": "^3.22.1",
+    "@tiptap/extension-subscript": "^3.22.1",
+    "@tiptap/extension-superscript": "^3.22.1",
+    "@tiptap/extension-table": "^3.22.1",
+    "@tiptap/extension-table-cell": "^3.22.1",
+    "@tiptap/extension-table-header": "^3.22.1",
+    "@tiptap/extension-table-row": "^3.22.1",
+    "@tiptap/extension-task-item": "^3.22.1",
+    "@tiptap/extension-task-list": "^3.22.1",
+    "@tiptap/extension-text-style": "^3.22.1",
+    "@tiptap/extension-underline": "^3.22.1",
+    "@tiptap/starter-kit": "^3.22.1",
+    "@tiptap/vue-3": "^3.22.1",
+    "@tiptap/y-tiptap": "^3.0.2",
+    "@types/node": "^24.6.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "lowlight": "^3.3.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.3",
+    "vite-plugin-dts": "^4.5.4",
+    "vue": "^3.5.31",
+    "vue-tsc": "^3.1.1",
+    "y-prosemirror": "^1.2.6",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.30"
+  },
+  "dependencies": {
+    "@tiptap/extension-collaboration-caret": "^3.22.2"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "name": "@norio-office/rich-text",
+  "version": "0.7.0",
+  "description": "A reusable Vue 3 rich text editor component built with Tiptap 3.",
+  "type": "module",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "docs",
+    "yjs",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && vue-tsc --noEmit -p tsconfig.json && vite build",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "vue3",
+    "tiptap",
+    "rich-text-editor",
+    "component-library"
+  ],
+  "license": "MIT",
+  "homepage": "https://cgq001.github.io/office-docs/",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "@tiptap/core": "^3.22.1",
+    "@tiptap/extension-code-block": "^3.22.1",
+    "@tiptap/extension-code-block-lowlight": "^3.22.1",
+    "@tiptap/extension-collaboration": "^3.22.2",
+    "@tiptap/extension-collaboration-caret": "^3.22.2",
+    "@tiptap/extension-font-family": "^3.22.1",
+    "@tiptap/extension-horizontal-rule": "^3.22.1",
+    "@tiptap/extension-placeholder": "^3.22.1",
+    "@tiptap/extension-subscript": "^3.22.1",
+    "@tiptap/extension-superscript": "^3.22.1",
+    "@tiptap/extension-table": "^3.22.1",
+    "@tiptap/extension-table-cell": "^3.22.1",
+    "@tiptap/extension-table-header": "^3.22.1",
+    "@tiptap/extension-table-row": "^3.22.1",
+    "@tiptap/extension-task-item": "^3.22.1",
+    "@tiptap/extension-task-list": "^3.22.1",
+    "@tiptap/extension-text-style": "^3.22.1",
+    "@tiptap/extension-underline": "^3.22.1",
+    "@tiptap/pm": "^3.22.1",
+    "@tiptap/starter-kit": "^3.22.1",
+    "@tiptap/vue-3": "^3.22.1",
+    "@tiptap/y-tiptap": "^3.0.2",
+    "lowlight": "^3.3.0",
+    "vue": "^3.5.0",
+    "y-prosemirror": "^1.2.6",
+    "yjs": "^13.6.30"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "katex": "^0.16.44",
+    "marked": "^17.0.5",
+    "plyr": "^3.8.4"
+  }
+}

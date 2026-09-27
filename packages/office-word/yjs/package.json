@@ -1,0 +1,14 @@
+{
+  "name": "@norio-office/rich-text-yjs-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "lib0": "^0.2.102",
+    "ws": "^8.18.0",
+    "y-protocols": "^1.0.6",
+    "yjs": "^13.6.30"
+  }
+}
