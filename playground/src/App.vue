@@ -1079,6 +1079,7 @@ onBeforeUnmount(() => {
           v-if="canMountEditor"
           ref="editorRef"
           v-model="content"
+          placeholder="输入 / 调用命令"
           :document-name="documentName"
           :collaboration="collaborationOptions"
           :comments="comments"

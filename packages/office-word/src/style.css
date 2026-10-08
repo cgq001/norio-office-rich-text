@@ -53,12 +53,12 @@
   --norio-office-rich-page-height: 1120px;
   --norio-office-rich-toolbar-height: 42px;
   --norio-office-rich-statusbar-height: 40px;
-  --norio-office-rich-editor-bg: #f5f7fb;
+  --norio-office-rich-editor-bg: var(--norio-office-rich-page-bg);
   --norio-office-rich-toolbar-bg: rgba(255, 255, 255, 0.98);
   --norio-office-rich-toolbar-shell-bg: transparent;
   --norio-office-rich-toolbar-border: transparent;
   --norio-office-rich-toolbar-shadow: none;
-  --norio-office-rich-workspace-bg: #f5f7fb;
+  --norio-office-rich-workspace-bg: var(--norio-office-rich-page-bg);
   --norio-office-rich-page-bg: #ffffff;
   --norio-office-rich-statusbar-bg: #ffffff;
   --norio-office-rich-outline-bg: #ffffff;
@@ -1929,11 +1929,11 @@
   width: var(--norio-office-rich-page-width);
   min-height: var(--norio-office-rich-page-height);
   background: var(--norio-office-rich-page-bg);
-  border: 1px solid var(--norio-office-rich-divider-color);
-  border-radius: 8px;
+  border: 0;
+  border-radius: 0;
   transform: scale(var(--norio-office-rich-page-scale));
   transform-origin: top center;
-  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.035);
+  box-shadow: none;
   overflow: visible;
 }
 
@@ -1966,9 +1966,7 @@
 }
 
 .norio-office-rich-editor[data-mode='preview'] .norio-office-rich-editor__workspace {
-  background:
-    radial-gradient(circle at top, rgba(15, 23, 42, 0.025), transparent 20%),
-    var(--norio-office-rich-workspace-bg);
+  background: var(--norio-office-rich-page-bg);
 }
 
 .norio-office-rich-editor__content {
@@ -2497,7 +2495,7 @@
 
 .norio-office-rich-prosemirror {
   min-height: var(--norio-office-rich-page-height);
-  padding: 52px 98px 76px;
+  padding: 26px 98px 76px;
   outline: none;
   line-height: 1.82;
   font-size: 15px;
@@ -7332,7 +7330,7 @@
   .norio-office-rich-editor[data-mode='preview'] .norio-office-rich-editor__page {
     width: var(--norio-office-rich-page-width);
     transform-origin: top left;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    box-shadow: none;
   }
 
   .norio-office-rich-editor[data-mode='preview'] .norio-office-rich-prosemirror {
