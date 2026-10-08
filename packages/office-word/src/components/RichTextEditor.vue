@@ -143,6 +143,7 @@ const commentPanelRef = ref<HTMLElement | null>(null)
 const commentMentionPanelRef = ref<HTMLElement | null>(null)
 const insertMenuRef = ref<HTMLElement | null>(null)
 const insertMenuPanelRef = ref<HTMLElement | null>(null)
+const slashMenuRef = ref<HTMLElement | null>(null)
 const markdownImportInputRef = ref<HTMLInputElement | null>(null)
 const localFileInputRef = ref<HTMLInputElement | null>(null)
 const imageUploadInputRef = ref<HTMLInputElement | null>(null)
@@ -186,6 +187,12 @@ const outlinePanelId = `norio-office-rich-outline-${useId()}`
 const viewportWidth = ref(typeof window === 'undefined' ? 780 : window.innerWidth)
 const viewportHeight = ref(typeof window === 'undefined' ? 900 : window.innerHeight)
 const isInsertMenuOpen = ref(false)
+const slashQuery = ref<string | null>(null)
+const slashRange = ref<{ from: number; to: number } | null>(null)
+const isSlashEmojiPickerOpen = ref(false)
+const slashDismissedAt = ref<string | null>(null)
+const selectedSlashIndex = ref(0)
+const slashMenuPosition = ref({ left: 8, top: 8, maxHeight: 320 })
 const isAlignMenuOpen = ref(false)
 const isTableActionColorMenuOpen = ref(false)
 const isTableThemeMenuOpen = ref(false)
@@ -878,6 +885,29 @@ const filteredInsertExternalItems = computed(() =>
     .filter((item) => isRichTextCodeEnabled(item.key, activeInsertMenuCodes.value))
     .map((item) => ({ ...item, label: getInsertItemLabel(item.key) })),
 )
+const slashCommands = computed(() => [
+  ...insertQuickItems.map(item => ({ key: item.key, label: item.key === 'paragraph' ? '正文' : item.label, action: item.action, iconName: item.iconName ?? '', isColorIcon: false, group: 'basic' })),
+  ...filteredInsertGeneralItems.value.filter(item => item.action !== 'local-file').map(item => ({ key: item.key, label: item.label, action: item.action, iconName: item.colorIconName ?? item.monoIconName ?? (item.key === 'emoji' ? 'smile' : ''), isColorIcon: !!item.colorIconName, group: 'common' })),
+  ...filteredInsertAppItems.value.map(item => ({ key: item.key, label: item.label, action: item.action, iconName: item.colorIconName ?? item.monoIconName ?? '', isColorIcon: !!item.colorIconName, group: 'common' })),
+  ...filteredInsertGeneralItems.value.filter(item => item.action === 'local-file').map(item => ({ key: item.key, label: item.label, action: item.action, iconName: item.colorIconName ?? item.monoIconName ?? '', isColorIcon: !!item.colorIconName, group: 'more' })),
+  ...filteredInsertExternalItems.value.map(item => ({ key: item.key, label: item.label, action: item.action, iconName: item.colorIconName ?? item.monoIconName ?? '', isColorIcon: !!item.colorIconName, group: 'more' })),
+])
+const visibleSlashCommands = computed(() => {
+  const query = (slashQuery.value ?? '').toLocaleLowerCase()
+  return slashCommands.value.filter(item =>
+    query ? `${item.label} ${item.key} ${item.action}`.toLocaleLowerCase().includes(query) : item.group !== 'more')
+    .map((item, index) => ({ ...item, index }))
+})
+const visibleSlashBasicCommands = computed(() => visibleSlashCommands.value.filter(item => item.group === 'basic'))
+const visibleSlashCommonCommands = computed(() => visibleSlashCommands.value.filter(item => item.group === 'common'))
+const visibleSlashMoreCommands = computed(() => visibleSlashCommands.value.filter(item => item.group === 'more'))
+const isSlashMenuOpen = computed(() => editorEditable.value && slashRange.value !== null && slashQuery.value !== null)
+const isSlashPopupOpen = computed(() => isSlashMenuOpen.value || isSlashEmojiPickerOpen.value)
+const slashMenuStyle = computed(() => ({
+  left: `${slashMenuPosition.value.left}px`,
+  top: `${slashMenuPosition.value.top}px`,
+  maxHeight: `${slashMenuPosition.value.maxHeight}px`,
+}))
 const hasInsertMenuItems = computed(() =>
   filteredInsertGeneralItems.value.length > 0
   || filteredInsertAppItems.value.length > 0
@@ -1939,6 +1969,7 @@ const shouldHideBlockSideControls = computed(() => {
     && ['imageBlock', 'videoBlock', 'linkBlock', 'table'].includes(selection.node.type.name)
   return !editorEditable.value || isBlockSideInteractionActive.value || isEditorTyping.value || isEditorComposing.value
     || hasNativeEditorSelection.value || isTextSelectionBubbleVisible.value || isTableSelectionBubbleVisible.value
+    || isSlashPopupOpen.value
     || !!marqueeGestureStart.value || hasMarqueeSelection.value || !!hasRangeSelection || hasNodeBubble
 })
 const visibleBlockSideControl = computed(() =>
@@ -4075,6 +4106,7 @@ function handlePageEditorCompositionEnd(event: CompositionEvent) {
   if (!(event.target instanceof Node) || !editor.value?.view.dom.contains(event.target)) return
   isEditorComposing.value = false
   handlePageEditorInput(event)
+  void nextTick(syncSlashMenu)
 }
 
 function handlePageBlockMouseMove(event: MouseEvent) {
@@ -5168,6 +5200,105 @@ function toggleInsertMenu() {
   isColorMenuOpen.value = false
   isHighlightMenuOpen.value = false
   isQuoteMenuOpen.value = false
+}
+
+function getSlashRange() {
+  if (!editor.value || !editorEditable.value || isEditorComposing.value || !editor.value.isFocused) return null
+  const selection = editor.value.state.selection
+  if (!(selection instanceof TextSelection) || !selection.empty || selection.$from.parent.type.name !== 'paragraph') return null
+  const { $from } = selection
+  if ($from.parentOffset !== $from.parent.content.size) return null
+  const text = $from.parent.textContent
+  const match = /^\/([^\s/]*)$/.exec(text)
+  return match ? { from: $from.start(), to: selection.from, query: match[1] } : null
+}
+
+function closeSlashMenu(dismiss = false) {
+  if (dismiss && slashRange.value) slashDismissedAt.value = `${slashRange.value.from}:${slashQuery.value}`
+  slashQuery.value = null
+  slashRange.value = null
+  selectedSlashIndex.value = 0
+}
+
+function syncSlashMenuPosition() {
+  if (!isSlashMenuOpen.value || !editor.value) return
+  const caret = editor.value.view.coordsAtPos(slashRange.value!.to)
+  const width = Math.min(250, window.innerWidth - 16)
+  const height = Math.min(680, (slashMenuRef.value?.scrollHeight ?? 678) + 2, window.innerHeight - 16)
+  const below = caret.bottom + 8 + height <= window.innerHeight - 8
+  slashMenuPosition.value = {
+    left: Math.max(8, Math.min(caret.left, window.innerWidth - width - 8)),
+    top: Math.max(8, Math.min(below ? caret.bottom + 8 : caret.top - height - 8, window.innerHeight - height - 8)),
+    maxHeight: height,
+  }
+}
+
+function syncSlashMenu() {
+  const range = getSlashRange()
+  if (!range) {
+    slashDismissedAt.value = null
+    closeSlashMenu()
+    return
+  }
+  if (slashDismissedAt.value === `${range.from}:${range.query}`) {
+    closeSlashMenu()
+    return
+  }
+  if (slashQuery.value !== range.query || slashRange.value?.from !== range.from) selectedSlashIndex.value = 0
+  slashQuery.value = range.query
+  slashRange.value = { from: range.from, to: range.to }
+  void nextTick(syncSlashMenuPosition)
+}
+
+function runSlashCommand(command: { action: string }) {
+  const range = getSlashRange()
+  if (!range || !slashRange.value || range.from !== slashRange.value.from || range.to !== slashRange.value.to) return
+  closeSlashMenu()
+  editor.value?.chain().focus().deleteRange({ from: range.from, to: range.to }).run()
+  if (command.action === 'table') insertTable(3, 3)
+  else if (command.action === 'columns') insertColumnsBlock(2)
+  else if (command.action === 'emoji') isSlashEmojiPickerOpen.value = true
+  else handleInsertAction(command.action)
+}
+
+function handleSlashEmojiSelect(emoji: string) {
+  isSlashEmojiPickerOpen.value = false
+  insertEmojiFromPicker(emoji)
+}
+
+function handleSlashMenuKeyDown(event: KeyboardEvent) {
+  if (isSlashEmojiPickerOpen.value && event.key === 'Escape') {
+    event.preventDefault()
+    event.stopPropagation()
+    isSlashEmojiPickerOpen.value = false
+    return true
+  }
+  if (!isSlashMenuOpen.value || !editor.value?.view.dom.contains(event.target as Node)) return false
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    event.stopPropagation()
+    closeSlashMenu(true)
+    return true
+  }
+  const items = visibleSlashCommands.value
+  if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && items.length) {
+    event.preventDefault()
+    event.stopPropagation()
+    selectedSlashIndex.value = (selectedSlashIndex.value + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length
+    slashMenuRef.value?.querySelectorAll<HTMLElement>('[role="option"]')[selectedSlashIndex.value]?.scrollIntoView({ block: 'nearest' })
+    return true
+  }
+  if ((event.key === 'Enter' || event.key === 'Tab') && items[selectedSlashIndex.value]) {
+    event.preventDefault()
+    event.stopPropagation()
+    runSlashCommand(items[selectedSlashIndex.value])
+    return true
+  }
+  return false
+}
+
+function handlePageEditorKeyDown(event: KeyboardEvent) {
+  if (!handleSlashMenuKeyDown(event)) handlePageEditorInput(event)
 }
 
 function toggleAlignMenu() {
@@ -7711,6 +7842,11 @@ function handleDocumentPointerDown(event: MouseEvent) {
   const target = event.target as Node | null
   const targetElement = target instanceof Element ? target : null
 
+  if (isSlashPopupOpen.value && !slashMenuRef.value?.contains(target)) {
+    closeSlashMenu(true)
+    isSlashEmojiPickerOpen.value = false
+  }
+
   if (
     hasMarqueeSelection.value
     && !pageRef.value?.contains(target)
@@ -8046,6 +8182,7 @@ function bindTableEditorListeners() {
     queueTableStateSync()
     syncOutlineState()
     syncMentionState()
+    syncSlashMenu()
   }
 
   const handleBlockSideThemeTransaction = ({ transaction }: { transaction: Transaction }) => {
@@ -8123,9 +8260,11 @@ onMounted(() => {
   window.addEventListener('resize', syncMentionPanelPosition)
   window.addEventListener('resize', syncCommentMentionPanelPosition)
   window.addEventListener('resize', syncViewportWidth)
+  window.addEventListener('resize', syncSlashMenuPosition)
   window.addEventListener('scroll', syncMentionPanelPosition, true)
   window.addEventListener('scroll', syncCommentMentionPanelPosition, true)
   window.addEventListener('scroll', syncTableThemeMenuPosition, true)
+  window.addEventListener('scroll', syncSlashMenuPosition, true)
   bindTableEditorListeners()
   void nextTick(syncLocalizedUiLabels)
 })
@@ -8147,9 +8286,11 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', syncMentionPanelPosition)
   window.removeEventListener('resize', syncCommentMentionPanelPosition)
   window.removeEventListener('resize', syncViewportWidth)
+  window.removeEventListener('resize', syncSlashMenuPosition)
   window.removeEventListener('scroll', syncMentionPanelPosition, true)
   window.removeEventListener('scroll', syncCommentMentionPanelPosition, true)
   window.removeEventListener('scroll', syncTableThemeMenuPosition, true)
+  window.removeEventListener('scroll', syncSlashMenuPosition, true)
   stopTableOverlayDragSync?.()
   detachTableEditorListeners?.()
   clearActiveTableState()
@@ -8160,6 +8301,8 @@ watch(
   (editable) => {
     editor.value?.setEditable(editable, false)
     if (!editable) {
+      closeSlashMenu()
+      isSlashEmojiPickerOpen.value = false
       closeBlockSideMenu()
       hoveredBlockSideControl.value = null
       clearMarqueeGesture()
@@ -9226,7 +9369,7 @@ defineExpose<RichTextEditorInstance>({
               ref="pageRef"
               class="norio-office-rich-editor__page"
               @mousedown.capture="handlePageMouseDown"
-              @keydown.capture="handlePageEditorInput"
+              @keydown.capture="handlePageEditorKeyDown"
               @beforeinput.capture="handlePageEditorInput"
               @compositionstart.capture="handlePageEditorCompositionStart"
               @compositionend.capture="handlePageEditorCompositionEnd"
@@ -10809,6 +10952,79 @@ defineExpose<RichTextEditorInstance>({
       :style="presentationPointerStyle"
       aria-hidden="true"
     />
+
+    <Teleport :to="isFullscreen && rootRef ? rootRef : 'body'">
+      <div
+        v-if="isSlashPopupOpen"
+        ref="slashMenuRef"
+        class="norio-office-rich-slash-menu"
+        :style="slashMenuStyle"
+        :role="isSlashMenuOpen ? 'listbox' : undefined"
+        :aria-label="isSlashMenuOpen ? '斜杠命令' : '表情符号'"
+        @mousedown.prevent
+      >
+        <template v-if="isSlashMenuOpen">
+          <section v-if="visibleSlashBasicCommands.length" class="norio-office-rich-slash-menu__section">
+            <div class="norio-office-rich-slash-menu__title">基础</div>
+            <div class="norio-office-rich-slash-menu__quick-grid">
+              <button
+                v-for="command in visibleSlashBasicCommands"
+                :key="command.key"
+                type="button"
+                role="option"
+                class="norio-office-rich-slash-menu__quick-item"
+                :class="{ 'norio-office-rich-slash-menu__item--active': command.index === selectedSlashIndex }"
+                :aria-label="command.label"
+                :aria-selected="command.index === selectedSlashIndex"
+                @mouseenter="selectedSlashIndex = command.index"
+                @click="runSlashCommand(command)"
+              >
+                <OfficeIcon v-if="command.iconName" :name="command.iconName" :size="16" color="currentColor" background-color="transparent" />
+                <span v-else>{{ command.key === 'paragraph' ? 'T' : command.label }}</span>
+              </button>
+            </div>
+          </section>
+          <section v-if="visibleSlashCommonCommands.length" class="norio-office-rich-slash-menu__section">
+            <div class="norio-office-rich-slash-menu__title">常用</div>
+            <button
+              v-for="command in visibleSlashCommonCommands"
+              :key="command.key"
+              type="button"
+              role="option"
+              class="norio-office-rich-slash-menu__item"
+              :class="{ 'norio-office-rich-slash-menu__item--active': command.index === selectedSlashIndex }"
+              :aria-selected="command.index === selectedSlashIndex"
+              @mouseenter="selectedSlashIndex = command.index"
+              @click="runSlashCommand(command)"
+            >
+              <OfficeColorIcon v-if="command.iconName && command.isColorIcon" :name="command.iconName" :size="20" background-color="transparent" />
+              <OfficeIcon v-else-if="command.iconName" :name="command.iconName" :size="16" color="currentColor" background-color="transparent" />
+              <span class="norio-office-rich-slash-menu__label">{{ command.label }}</span>
+            </button>
+          </section>
+          <section v-if="visibleSlashMoreCommands.length" class="norio-office-rich-slash-menu__section">
+            <div class="norio-office-rich-slash-menu__title">更多</div>
+            <button
+              v-for="command in visibleSlashMoreCommands"
+              :key="command.key"
+              type="button"
+              role="option"
+              class="norio-office-rich-slash-menu__item"
+              :class="{ 'norio-office-rich-slash-menu__item--active': command.index === selectedSlashIndex }"
+              :aria-selected="command.index === selectedSlashIndex"
+              @mouseenter="selectedSlashIndex = command.index"
+              @click="runSlashCommand(command)"
+            >
+              <OfficeColorIcon v-if="command.iconName && command.isColorIcon" :name="command.iconName" :size="20" background-color="transparent" />
+              <OfficeIcon v-else-if="command.iconName" :name="command.iconName" :size="16" color="currentColor" background-color="transparent" />
+              <span class="norio-office-rich-slash-menu__label">{{ command.label }}</span>
+            </button>
+          </section>
+          <div v-if="!visibleSlashCommands.length" class="norio-office-rich-slash-menu__empty">无匹配命令</div>
+        </template>
+        <EmojiPickerPanel v-else @select="handleSlashEmojiSelect" />
+      </div>
+    </Teleport>
 
   </div>
 </template>
