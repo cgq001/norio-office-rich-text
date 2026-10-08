@@ -3336,7 +3336,10 @@ function buildDomTextPdfBlob(pageElement: HTMLElement) {
   }
 
   const pagesObjectId = addObject()
-  const descendantFontObjectId = addObject('<< /Type /Font /Subtype /CIDFontType0 /BaseFont /STSong-Light /CIDSystemInfo << /Registry (Adobe) /Ordering (GB1) /Supplement 2 >> >>')
+  // A descriptor keeps PDF readers from interpreting UCS-2 CJK text as a
+  // simple single-byte fallback font when no embedded font file is present.
+  const fontDescriptorObjectId = addObject('<< /Type /FontDescriptor /FontName /STSong-Light /Flags 6 /FontBBox [0 -200 1000 900] /Ascent 880 /Descent -120 /CapHeight 880 /StemV 80 /ItalicAngle 0 >>')
+  const descendantFontObjectId = addObject(`<< /Type /Font /Subtype /CIDFontType0 /BaseFont /STSong-Light /FontDescriptor ${fontDescriptorObjectId} 0 R /DW 1000 /CIDSystemInfo << /Registry (Adobe) /Ordering (GB1) /Supplement 2 >> >>`)
   const cjkFontObjectId = addObject(`<< /Type /Font /Subtype /Type0 /BaseFont /STSong-Light /Encoding /UniGB-UCS2-H /DescendantFonts [${descendantFontObjectId} 0 R] >>`)
   const latinFontObjectId = addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>')
   const pageObjectIds = pages.map((page) => {
