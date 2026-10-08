@@ -1092,7 +1092,6 @@ onBeforeUnmount(() => {
           :comment-mention-provider="handleCommentMentionSearch"
           :outlinePlacement="'left'"
           :mode="editorMode"
-          :editable="editorMode === 'edit'"
           @update:model-value="handleContentUpdate"
           @mention-search="handleMentionSearch"
           @mention-item-click="handleMentionItemClick"

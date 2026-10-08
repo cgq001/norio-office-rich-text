@@ -138,7 +138,6 @@ function clearDocument() {
 | --- | --- | --- | --- |
 | `modelValue` | `JSONContent \| null` | `null` | 编辑器 JSON，支持 `v-model`；`null` 不表示清空，见上方示例。 |
 | `documentName` | `string` | `''` | 内置导出下载的文件名基础名；组件会自动追加 `.pdf`、`.png` 或 `.html`。 |
-| `editable` | `boolean` | `true` | 是否允许编辑。 |
 | `mode` | `'edit' \| 'preview'` | `'edit'` | 编辑模式或预览模式。 |
 | `showToolbar` | `boolean` | `true` | 编辑状态下是否显示顶部工具栏。预览状态下始终隐藏。 |
 | `watermark` | `RichTextEditorWatermarkOptions \| null` | `null` | 文档页面文本水印配置；不传或 `text` 为空时不显示水印。 |
@@ -550,10 +549,9 @@ function handleMentionSubmit(item: RichTextEditorMentionItem) {
 
 | 配置 | 正文能否编辑 | 顶部工具栏 | 适用场景 |
 | --- | --- | --- | --- |
-| 默认 `mode="edit"`、`editable=true` | 能 | 显示 | 写文档 |
-| `mode="edit"`、`:show-toolbar="false"` | 能，除非同时设置 `editable=false` | 隐藏 | 只使用选中文字的气泡菜单和块句柄菜单 |
-| `mode="edit"`、`:editable="false"` | 不能 | 保留，编辑操作受限制 | 编辑页面里的只读状态 |
-| `mode="preview"` | 不能，即使 `editable=true` | 隐藏 | 阅读/预览 |
+| 默认 `mode="edit"` | 能 | 显示 | 写文档 |
+| `mode="edit"`、`:show-toolbar="false"` | 能 | 隐藏 | 只使用选中文字的气泡菜单和块句柄菜单 |
+| `mode="preview"` | 不能 | 隐藏 | 阅读/预览 |
 
 这里限制的是用户交互，不是业务 API 的安全边界。业务方仍应避免在只读时主动调用修改内容的方法。
 
@@ -577,7 +575,7 @@ function handleMentionSubmit(item: RichTextEditorMentionItem) {
 
 窄屏下预览模式会自动缩放页面画布，让文档在手机上保持可读。
 
-底部信息栏提供演示、全屏、缩放、导出和打印入口，顶部工具栏不再显示导出、打印。点击“演示”后，组件临时进入只读预览并全屏显示；按 Esc 或通过浏览器退出全屏后，恢复进入前的编辑/预览状态，不修改业务传入的 `mode`、`editable` 或文档内容。例如，从编辑页开始演示，退出后可以继续编辑；从预览页开始演示，退出后仍是预览。
+底部信息栏提供演示、全屏、缩放、导出和打印入口，顶部工具栏不再显示导出、打印。点击“演示”后，组件临时进入只读预览并全屏显示；按 Esc 或通过浏览器退出全屏后，恢复进入前的编辑/预览状态，不修改业务传入的 `mode` 或文档内容。例如，从编辑页开始演示，退出后可以继续编辑；从预览页开始演示，退出后仍是预览。
 
 ### 协同编辑
 
@@ -1160,7 +1158,6 @@ import RichTextEditor from '@norio-office/rich-text'
 | --- | --- | --- | --- |
 | `modelValue` | `JSONContent \| null` | `null` | Tiptap JSON content, not an HTML string. `null` does not clear it. |
 | `documentName` | `string` | `''` | Base filename for built-in downloads. The component appends `.pdf`, `.png`, or `.html`. |
-| `editable` | `boolean` | `true` | Enables or disables editing. |
 | `mode` | `'edit' \| 'preview'` | `'edit'` | Edit mode or read-only preview mode. |
 | `showToolbar` | `boolean` | `true` | Shows the top toolbar in edit mode. Always hidden in preview mode. |
 | `watermark` | `RichTextEditorWatermarkOptions \| null` | `null` | Text watermark configuration for the document page. No watermark is rendered when omitted or when `text` is empty. |
@@ -1528,7 +1525,7 @@ Common message keys:
 
 ### Preview Mode
 
-`editable=false` in edit mode preserves the toolbar by default while disabling user editing; preview always hides it. Host code must still guard calls to mutating instance methods. The component needs a browser DOM; mount client-side in SSR applications.
+Host code must still guard calls to mutating instance methods in preview mode. The component needs a browser DOM; mount client-side in SSR applications.
 
 Use `mode="preview"` to switch the component into a read-only preview shell. The top toolbar, bubble menus, and block handle menus are hidden, editing is disabled, image links work, and the outline can be placed on either side. When editing is enabled, clicking an image selects it for editing instead of following its link.
 
@@ -1552,7 +1549,7 @@ For read-only preview:
 
 On narrow screens, preview mode automatically scales the page canvas so the document stays readable on phones.
 
-Presentation, fullscreen, zoom, export, and print are available in the bottom status bar; export and print are no longer in the top toolbar. Presentation temporarily switches the component to read-only preview in fullscreen. Pressing Escape or leaving fullscreen through the browser restores the original edit/preview state without modifying the host's `mode`, `editable`, or document content. For example, starting from edit mode returns to editing, while starting from preview remains in preview.
+Presentation, fullscreen, zoom, export, and print are available in the bottom status bar; export and print are no longer in the top toolbar. Presentation temporarily switches the component to read-only preview in fullscreen. Pressing Escape or leaving fullscreen through the browser restores the original edit/preview state without modifying the host's `mode` or document content. For example, starting from edit mode returns to editing, while starting from preview remains in preview.
 
 ### Collaboration
 

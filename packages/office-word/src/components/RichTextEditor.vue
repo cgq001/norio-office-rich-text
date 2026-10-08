@@ -68,7 +68,6 @@ import { dividerDefaultColor, dividerStyles, normalizeDividerColor, normalizeDiv
 const props = withDefaults(defineProps<RichTextEditorProps>(), {
   modelValue: null,
   documentName: '',
-  editable: true,
   mode: 'edit',
   showToolbar: true,
   watermark: null,
@@ -794,7 +793,7 @@ const initialContent = computed<JSONContent>(() => {
 })
 
 const isPreviewMode = computed(() => isPresentationMode.value || props.mode === 'preview')
-const editorEditable = computed(() => props.editable && !isPreviewMode.value)
+const editorEditable = computed(() => !isPreviewMode.value)
 const isToolbarVisible = computed(() => props.showToolbar && !isPreviewMode.value)
 const isCommentFeatureEnabled = computed(() => isFeatureWhitelisted('comments'))
 const activeOutlinePlacement = computed(() =>

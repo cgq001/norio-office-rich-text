@@ -22,7 +22,6 @@ export type {
 export type RichTextEditorProps = {
   modelValue?: JSONContent | null
   documentName?: string
-  editable?: boolean
   mode?: 'edit' | 'preview'
   showToolbar?: boolean
   watermark?: RichTextEditorWatermarkOptions | null
